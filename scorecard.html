@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScoreCard</title>
+    <link rel="stylesheet" href="scorecard.css">
+</head>
+<body>
+  <h3>0</h3>
+    <div class="scoreBoard">
+        <h2>Target:180</h2>
+        <span id="h1">Civil 6th sem: </span>
+        <div class="scoreHeader">
+        <h1>0/0</h1>
+        <div class="overs">
+          <span class="bracket">(</span>
+          <input type="text" value="0.0" class="over" id="ballToBall" disabled />
+          <input type="text" value="/5" class="over" id="overToOver" disabled />
+          <span class="bracket">)</span>
+        </div>
+      </div>
+      <div class="scoreDetails"><div id="CRR">CRR:0</div><div id="PrjScr">Projected Score:0</div></div>
+      <div class="batters">
+      <div class="striker">
+        <span id="sName">abc</span><span id="strikerScore">0(0)</span>
+      </div>
+      <div class="nonStriker">
+        <span id="nsName">xyz</span><span id="nonStrikerScore">0(0)</span>
+      </div>
+    </div>
+        <div class="runs">
+          <button onclick="run('4')">4</button>
+          <button onclick="run('6')">6</button>
+          <button onclick="run('0')">0</button>
+          <button onclick="run('1')">1</button>
+          <button onclick="run('2')">2</button>
+          <button onclick="run('3')">3</button>
+          <button onclick="wide('1')">Wd</button>
+          <button id="wicket" onclick="run('1',true)">w</button>
+        </div>
+      </div>
+      <button id="second-ing">2nd Innings</button>
+      <script src="javaScripts/score.js" type="text/javascript"></script>
+</body>
+</html>

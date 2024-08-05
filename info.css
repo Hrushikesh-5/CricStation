@@ -1,0 +1,159 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+  height:100%;
+  
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: rgb(241, 242, 203);
+    /* background:url(assets/stadium.jpg); */
+    /* background: url(assets/ball.jpg); */
+    /* background-image:url(assets/stadium.jpg); */
+    /* background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover; */
+/* }.main{
+  position:relative;
+  display:inline-block; */
+  /* height:100vh;
+  width:100vw; */
+}.main{
+  min-height:100vh;
+    background: url('assets/Stadium1.jpg') no-repeat center center fixed; 
+    background-size: cover;
+    
+  
+    padding: 20px;
+}
+
+/* }.main img{
+  height:100%;
+  width:100%;
+  object-fit: cover;
+  object-position: center;
+  
+} */
+.Teams{
+    max-width: 60vw;
+    display:flex;
+    flex-direction: column;
+    margin: 20px auto;
+    background-color: rgba(246, 230, 230, 0.404);
+    border-radius: 8px;
+    padding: 5px 10px;
+}input[type=text] {
+    width: 100%;
+    padding: 5px 0px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid black;
+    background-color:transparent
+  }
+  input[type=text]:focus {
+    background-color:  rgba(246, 230, 230, 0.404);
+    border-bottom: 3px solid green;
+  }
+  .green{
+    color: rgb(58, 227, 58);
+  }.box1{
+    /* display: inline-block; */
+    margin-top: 20px;
+    text-align: center;
+  }
+ .toss{
+    max-width: 60vw;
+    display:flex;
+    gap: 10px;
+    margin: 10px auto;
+    background-color: rgba(246, 230, 230, 0.404);
+    border-radius: 8px;
+    padding: 5px 10px;
+  }input[type=radio]{
+    margin:0px 4px
+  }.container{
+    position:relative;
+    cursor: pointer;
+    -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding-left:32px;
+  margin-bottom: 4px;
+  }.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 16px;
+    width: 16px;
+    background-color: rgba(246, 230, 230, 0.404);
+    border-radius: 50%;
+    border: 3px solid black;
+  }/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+    background-color: #ccc;
+  }/* When the radio button is checked, add a blue background */
+.container input:checked ~ .checkmark {
+    background-color:green;
+  }/* Create the indicator (the dot/circle - hidden when not checked) */
+
+  .box3,.box1,.box2,.box4{
+    text-align: center;
+  }
+  .box4 input{
+    width: 100%;
+    padding: 5px 0px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid black;
+    background-color: transparent;
+  } input[type=number]:focus {
+   background-color:  rgba(246, 230, 230, 0.404);
+    border-bottom: 3px solid green;
+  }
+  .configure{
+    display:flex;
+    max-width: 60vw;
+  
+    margin:20px auto;
+    position:relative;
+    height:7vh;
+  
+  }.start{
+    position:relative;
+    width:50%;
+    
+    
+  } input[type=submit]{
+    position: relative;
+    height:100%;
+    width:100%;
+    background-color:green;
+    color: white;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    font-size: medium;
+
+  }.settings{
+   
+    position:relative;
+    width:50%;
+    padding-top: 11px;
+   text-align: center;
+  }.start input[type=submit]:hover{
+    background-color: rgb(12, 97, 12);
+  }
+  @media (max-width:600px) {
+    .main{
+      background-image: url(assets/ball.jpg);
+    }
+  }
