@@ -14,36 +14,32 @@ let strikerScore = 0;
 let strikerBalls = 0;
 let nonStrikerScore = 0;
 let nonStrikerBalls = 0;
-// let isStriker = true; // Keep track of who is on strike
-/*
-localStorage.setItem('strikerName', strikerName);
-localStorage.setItem('nonStrikerName', nonStrikerName);
-localStorage.setItem('bowlerName', bowlerName);
-*/
-function updateBatterDisplay() {
-    let sName = document.getElementById('sName');
-    sName.innerText = `${strikerName} *`;
-    let nsName = document.getElementById('nsName');
-    nsName.innerText = `${nonStrikerName}`;
+ let isStriker = true; // Keep track of who is on strike--> JUST CHANGED
+ let sScore = document.getElementById('strikerScore');// THIS IS JUST CHANGED
+ let nsScore = document.getElementById('nonStrikerScore');
 
-    let sScore = document.getElementById('strikerScore');
-    sScore.innerText = `${strikerScore}(${strikerBalls})`;
+// function updateBatterDisplay() {--->JUST CHANGED FOR A WHILE TO CHECK
+//     let sName = document.getElementById('sName');
+//     sName.innerText = `${strikerName} *`;
+//     let nsName = document.getElementById('nsName');
+//     nsName.innerText = `${nonStrikerName}`;
 
-    let nsScore = document.getElementById('nonStrikerScore');
-    nsScore.innerText = `${nonStrikerScore}(${nonStrikerBalls})`;
-}
-function swapStrike() {
-    [strikerName, nonStrikerName] = [nonStrikerName, strikerName];
-    [strikerScore, nonStrikerScore] = [nonStrikerScore, strikerScore];
-    [strikerBalls, nonStrikerBalls] = [nonStrikerBalls, strikerBalls];
-    updateBatterDisplay();
-}
+//     let sScore = document.getElementById('strikerScore');
+//     sScore.innerText = `${strikerScore}(${strikerBalls})`;
+
+//     let nsScore = document.getElementById('nonStrikerScore');
+//     nsScore.innerText = `${nonStrikerScore}(${nonStrikerBalls})`;
+// }
+// function swapStrike() {--->JUST CHANGED FOR A WHILE TO CHECK
+//     [strikerName, nonStrikerName] = [nonStrikerName, strikerName];
+//     [strikerScore, nonStrikerScore] = [nonStrikerScore, strikerScore];
+//     [strikerBalls, nonStrikerBalls] = [nonStrikerBalls, strikerBalls];
+//     updateBatterDisplay();
+// }
 function whoToBat() {
-    updateBatterDisplay();
-    // let sName = document.getElementById('sName');
-    // sName.innerText = strikerName;
-    // let nsName = document.getElementById('nsName');
-    // nsName.innerText = nonStrikerName;
+    //**  updateBatterDisplay();-->JUST CHANGED
+
+    
     if (toss === 'host') {
         if (choice === 'bat') {
             heading.textContent = teamA;
@@ -57,7 +53,7 @@ function whoToBat() {
             heading.textContent = teamA;
         }
     }
-    // updateStrike();
+     updateStrike();//-JUST CHANGED
 }
 
 // Call the function to set the heading when the page loads
@@ -68,7 +64,7 @@ reset = () => {
     target.innerText = "target:" + localStorage.getItem('totalScore');
     target.style.display = "block";
     isStriker = true;
-    // updateStrike();
+     updateStrike();//JUST CHANGED
 }
 secondInnings = () => {
     if (heading.innerText === teamA) {
@@ -125,33 +121,39 @@ function run(runs, wic = false) {
             //code for updation of projected score.
             ProjectedSrc = (Number(crr.toFixed(2)) * Number(totalOvers));
             ProjectedScore.innerText = ProjScrText + ":" + ProjectedSrc.toFixed(0);
-            if (runs % 2 === 1) {
+            //code for strike change and updating runs of individual batsmans
+            if ( (isStriker) && (runs % 2 === 1)) {
                 strikerScore += Number(runs);
-            strikerBalls++;
-            // let temp = strikerName; 
-            // nonStrikerName = nonStrikerName + "*";
-            // strikerName = temp.replace("*","");
-                  swapStrike();
-                 // Swap the asterisk without swapping the positions
-                //  let temp = strikerName;
-                //  strikerName = nonStrikerName + " *";
-                //  nonStrikerName = temp.replace(" *", "");
-            }
-            if(runs % 2 === 0){
+                strikerBalls++;
+                sScore.innerText = `${strikerScore}(${strikerBalls})`;
+                changeStrike();
+
+                //strikerScore += Number(runs);THESE
+            //strikerBalls++;THREE 
+            //swapStrike();LINE HAVE TO BE UNCOMMENT
+
+            } else if ((isStriker === false) && (runs % 2 == 1)){
+                nonStrikerScore += Number(runs);
+                 nonStrikerBalls++;
+                 nsScore.innerText = `${nonStrikerScore}(${nonStrikerBalls})`;
+                 changeStrike();
+             } else if ((isStriker === false) && (runs % 2 == 0)){
+                nonStrikerScore += Number(runs);
+                nonStrikerBalls++;
+                nsScore.innerText = `${nonStrikerScore}(${nonStrikerBalls})`;
+             } else if ((isStriker) && (runs % 2 == 0)){
+                strikerScore += Number(runs);
+                strikerBalls++;
+                sScore.innerText = `${strikerScore}(${strikerBalls})`;
+             }
+            //--JUST CHANGED ONLY THE CURLY BRACE HAS TO BE UNCOMMENT
+             
+            /*if(runs % 2 === 0){
             strikerScore += Number(runs);
             strikerBalls++;
             }
-            updateBatterDisplay();
-            // let strikerRuns = document.getElementById('strikerScore');
-            // let [strRuns,strBallsTxt] = strikerRuns.innerText.split('(');
-            // let strBalls = strBallsTxt.innerText.split(')')[0];
-            // let nonStrikerRuns = document.getElementById('nonStrikerScore');
-            // let [nonStrRuns,nonStrBallsTxt] = nonStrikerRuns.innerText.split('(');
-            // let nonStrBalls = nonStrBallsTxt.innerText.split(')')[0];
-            /* if (runs === '1' || runs === '3') {
-            
-                 changeStrike();
-        }*/
+            updateBatterDisplay();*/
+
             // crr = (eval(Number(score)/(Number(ballToBall.value))));
             // CurrRunRate.innerText = crrText + ":" + crr;
             // if(b < 4){
@@ -217,23 +219,24 @@ function wide(runs) {
     ProjectedSrc = (Number(crr.toFixed(2)) * Number(totalOvers));
     ProjectedScore.innerText = ProjScrText + ":" + ProjectedSrc.toFixed(0);
 }
-// function changeStrike() {
-//     isStriker = !isStriker;
-//     updateStrike();
-// }
+ function changeStrike() {// JUST CHANGED FOR A WHILE
+     isStriker = !isStriker;
+     updateStrike();
+ }
 
-// function updateStrike() {
-//     let sName = document.getElementById('sName');
-//     let nsName = document.getElementById('nsName');
+ function updateStrike() {//JUST CHANGED FOR A WHILE
+    let sName = document.getElementById('sName');
+     let nsName = document.getElementById('nsName');
 
-//     if (isStriker) {
-//         sName.innerText = strikerName + "*";
-//         nsName.innerText = nonStrikerName;
-//     } else {
-//         sName.innerText = strikerName;
-//         nsName.innerText = nonStrikerName + "*";
-//     }
-// }
+     if (isStriker) {
+         sName.innerText = strikerName + "*";
+        //  sName.style.color = 'red';
+        nsName.innerText = nonStrikerName;
+    } else {
+         sName.innerText = strikerName;
+         nsName.innerText = nonStrikerName + "*";
+    }
+ }
 
 whoToBat();
 

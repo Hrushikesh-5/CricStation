@@ -174,13 +174,14 @@ font-size:25px;
 .batters {
     display: flex;
     width: 100%; 
-    background-color: #ef4444;
+    /* background-color: #ef4444; */
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     padding: 10px;
     box-sizing: border-box;
     height: 20vh;
+    
 }
 .striker, .nonStriker {
     background-color: #bef264;
@@ -191,4 +192,7 @@ font-size:25px;
     flex: 1 1 calc(50% - 20px);/* Allow elements to take up half the width, minus some gap */
     padding: 10px;
     box-sizing: border-box;
+}
+#sName, #nsName, #strikerScore, #nonStrikerScore{
+    color:black;
 }
