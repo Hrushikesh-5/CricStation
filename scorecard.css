@@ -196,3 +196,35 @@ font-size:25px;
 #sName, #nsName, #strikerScore, #nonStrikerScore{
     color:black;
 }
+#thisOver{
+    display:flex;
+    flex-wrap: wrap; 
+    align-items: center;
+    justify-content:flex-start;
+    gap: 0.8rem;
+    margin-bottom: 10px;
+    border:2px solid black;
+    width:90%;
+    background-color: #ef4444;
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    
+}
+#thisOver > div{
+height:40px;
+width:40px;
+border: 1px solid black ;
+border-radius: 50%;
+/* background-color: #bef264; */
+background-color: #bef264;
+padding: 0.1rem 0.6rem;
+font-size: 1.9rem;
+display: none;
+}
+#thisOver span{
+    font-size: 1.6rem;
+}/*#thisOver div:nth-child(2){
+    display: none;
+} */
