@@ -21,7 +21,7 @@ let nsScore = document.getElementById('nonStrikerScore');
 // Get the parent div element
 const thisOver = document.getElementById('thisOver');
 // Get all child div elements
-const thisOverChildDivs = thisOver.querySelectorAll('div');
+// const thisOverChildDivs = thisOver.querySelectorAll('div');
 
 // function updateBatterDisplay() {--->JUST CHANGED FOR  A WHILE TO CHECK
 //     let sName = document.getElementById('sName');
@@ -82,57 +82,61 @@ secondInnings = () => {
         return;
     }
 }
-function thisOverUpdation(b, thisOver, thisOverChildDivs, arr) {
-    const firstChildDiv = thisOver.querySelector('div:nth-child(2)');
+function insertWideInThisOver(thisOver){
+    let div = document.createElement("div");
+    div.textContent = "Wd";
+      div.style.height = "40px";
+      div.style.width = "40px";
+      div.style.borderRadius = "50%";
+      div.style.border = "1px solid black";
+      div.style.backgroundColor = "#bef264";
+      div.style.padding = "0.1rem 0.6rem";
+      div.style.fontSize = "1rem";
+      div.style.display = "block";
+      div.style.fontWeight = "bold";
+      thisOver.appendChild(div);
+
+}
+function insertRunsOrWicInThisOver(arr, b, thisOver){
+    let div = document.createElement("div");
+    div.textContent = arr[b];
+      div.style.height = "40px";
+      div.style.width = "40px";
+      div.style.borderRadius = "50%";
+      div.style.border = "1px solid black";
+      div.style.backgroundColor = "#bef264";
+      div.style.padding = "0.1rem 0.6rem";
+      div.style.fontSize = "1.9rem";
+      div.style.display = "block";
+      thisOver.appendChild(div);
+}
+function thisOverUpdation(b, thisOver, arr, wic, wd) {
     if (b > 4) {
-        let arrCloned = [...arr];
-        let div = thisOverChildDivs[5];
-        div.innerText = Number(arrCloned[5]);
-        div.style.display = "block";
-        setTimeout(function () {//temporar until nextOver Feature is added
-            for (let i = 0; i < 6; i++) {
-                let divDisappear = thisOverChildDivs[i];
-                arr.pop();
-                divDisappear.style.display = "none";
+        if(wd){
+            insertWideInThisOver(thisOver);
+        }else{
+            insertRunsOrWicInThisOver(arr, b, thisOver);
+        setTimeout(function () {//temporary until nextOver Feature is added
+            let childDivs = thisOver.querySelectorAll('div');
+            for (let i = 0; i < childDivs.length; i++) {
+                let divDisappear = childDivs[i];
+                divDisappear.remove(); // Remove the div element
             }
+             // Clear the array as part of the cleanup
+             arr.length = 0;
         }, 2000)
 
-        //     let arrRev = [...arr];
-        //     arrRev.reverse();
-        /*for (let i = 0; i < arrRev.length; i++){
-         let div = thisOverChildDivs[i];
-         div.innerText = Number(arrRev[i]);
-         div.style.display = "block";
-         console.log(div.innerText);
-        }*/
-
-    } else {
-        if (getComputedStyle(firstChildDiv).display === "none") {
-            // firstChildDiv.innerText = Number(runs);
-            firstChildDiv.innerText = Number(arr[0]);
-            firstChildDiv.style.display = "block";
-        } else {
-            let arrCloned = [...arr];
-            for (let i = 0; i < arrCloned.length; i++) {
-                let div = thisOverChildDivs[i];
-                div.innerText = Number(arrCloned[i]);
-                div.style.display = "block";
-            }
-            //    let arrRev = [...arr];
-            //    arrRev.reverse();
-            // for (let i = 0; i < arrRev.length; i++){// this is for reverse timeline..
-            //     let div = thisOverChildDivs[i];
-            //     let runs = Number(arrRev[i]);
-            //     div.innerText = Number(runs);
-            //     div.style.display = "block";
-            //     // console.log("runs:")
-            //     // console.log(runs);
-            //     console.log(div.innerText);
-
-            // }
+    }
+ } else {
+            if(wd){
+                insertWideInThisOver(thisOver);
+            
+            }else {
+                insertRunsOrWicInThisOver(arr, b, thisOver);
         }
     }
 }
+
 function run(runs, wic = false) {
 
     let [crrText, crr] = CurrRunRate.innerText.split(':');
@@ -204,7 +208,7 @@ function run(runs, wic = false) {
                 sScore.innerText = `${strikerScore}(${strikerBalls})`;
             }
             arr.push(Number(runs));
-            thisOverUpdation(b, thisOver, thisOverChildDivs, arr);
+            thisOverUpdation(b, thisOver, arr, wic);
             //--JUST CHANGED ONLY THE CURLY BRACE HAS TO BE UNCOMMENT
 
             /*if(runs % 2 === 0){
@@ -239,6 +243,8 @@ function run(runs, wic = false) {
             crr = (Number(score)) / totalBalls;
             CurrRunRate.innerText = crrText + ":" + crr.toFixed(2);
             //}
+            arr.push("W");
+            thisOverUpdation(b, thisOver, arr, wic);
         }
 
     }
@@ -258,6 +264,8 @@ function run(runs, wic = false) {
 }
 let wideCount = 0;
 function wide(runs) {
+    let wd = true;
+    let wic = false;
     let ballToBall = document.getElementById('ballToBall')
     let [a, b] = ballToBall.value.split('.');
     let OverToOver = document.getElementById('overToOver');
@@ -277,6 +285,7 @@ function wide(runs) {
     CurrRunRate.innerText = crrText + ":" + crr.toFixed(2);
     ProjectedSrc = (Number(crr.toFixed(2)) * Number(totalOvers));
     ProjectedScore.innerText = ProjScrText + ":" + ProjectedSrc.toFixed(0);
+    thisOverUpdation(b, thisOver, arr, wic, wd);
 }
 function changeStrike() {// JUST CHANGED FOR A WHILE
     isStriker = !isStriker;
@@ -306,3 +315,74 @@ secondIng.addEventListener('click', () => {
 
 
 })
+
+//previous mistakes
+/*function thisOverUpdation(b, thisOver, thisOverChildDivs, arr, wic) {
+// const firstChildDiv = thisOver.querySelector('div:nth-child(2)');
+    if (b > 4) {
+        let arrCloned = [...arr];
+         let div = thisOverChildDivs[5];
+         div.innerText = Number(arrCloned[5]);
+         div.style.display = "block";
+        setTimeout(function () {
+            for (let i = 0; i < arrCloned.length; i++) {
+                 let divDisappear = thisOverChildDivs[i];
+                 arr.pop();
+                
+                divDisappear.style.display = "none";
+            } 
+        }, 2000)
+             let arrRev = [...arr];
+             arrRev.reverse();
+        for (let i = 0; i < arrRev.length; i++){
+         let div = thisOverChildDivs[i];
+         div.innerText = Number(arrRev[i]);
+         div.style.display = "block";
+         console.log(div.innerText);
+        }
+}
+        else {
+         if (getComputedStyle(firstChildDiv).display === "none") {
+              firstChildDiv.innerText = (arr[0]);
+                 firstChildDiv.style.display = "block";
+            } 
+                 //this was the mistae after wic feature
+                 else{
+                     for(let i =0; i < arr.length; i++){
+                         if(arr[i] === "W"){
+                             continue;
+                         }else{
+                             firstChildDiv.innerText = (arr[i]);
+                 firstChildDiv.style.display = "block";
+                             break;
+                         }
+                     }
+            }
+
+         } else {
+                 let arrCloned = [...arr];
+             for (let i = 0; i < arrCloned.length; i++) {
+                     let div = thisOverChildDivs[i];
+                     div.innerText = Number(arrCloned[i]);
+                     div.style.display = "block";
+                 }
+    
+    // for reverse timeline
+                    let arrRev = [...arr];
+                    arrRev.reverse();
+                 for (let i = 0; i < arrRev.length; i++){
+                     let div = thisOverChildDivs[i];
+                     let runs = Number(arrRev[i]);
+                    div.innerText = Number(runs);
+                     div.style.display = "block";
+                 }
+            }
+        }
+    }
+*/
+// Insert the new div before the first child of 'thisOver'
+           /* if (thisOver.firstChild) {
+                thisOver.insertBefore(div, thisOver.firstChild);
+            } else {
+                thisOver.appendChild(div);
+            }*/

@@ -212,17 +212,17 @@ font-size:25px;
     padding-left: 5px;
     
 }
-#thisOver > div{
+/* #thisOver > div{
 height:40px;
 width:40px;
 border: 1px solid black ;
 border-radius: 50%;
-/* background-color: #bef264; */
+ background-color: #bef264; 
 background-color: #bef264;
 padding: 0.1rem 0.6rem;
 font-size: 1.9rem;
 display: none;
-}
+} */
 #thisOver span{
     font-size: 1.6rem;
 }/*#thisOver div:nth-child(2){
