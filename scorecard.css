@@ -132,11 +132,13 @@ h2{
     font-size: 18px;
     display: inline-block;
     color:white;
+    font-weight: 500;
 }#PrjScr{
     font-size: 18px;  
     display: inline-block;
     margin:10px;
     color: white;
+    font-weight: 500;
 }/*.batters{
     display:flex;
 width: 570px; 
@@ -180,7 +182,7 @@ font-size:25px;
     flex-wrap: wrap;
     padding: 10px;
     box-sizing: border-box;
-    height: 20vh;
+    height: 10vh;
     
 }
 .striker, .nonStriker {
@@ -202,7 +204,7 @@ font-size:25px;
     align-items: center;
     justify-content:flex-start;
     gap: 0.8rem;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
     border:2px solid black;
     width:90%;
     background-color: #ef4444;
@@ -212,7 +214,55 @@ font-size:25px;
     padding-left: 5px;
     
 }
-/* #thisOver > div{
+
+#thisOver span{
+    font-size: 1.6rem;
+}
+#bowler{
+    position:relative;
+    display:flex;
+    flex-wrap: wrap; 
+    align-items: center;
+    /* justify-content:space-around; */
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    border:2px solid black;
+    width:90%;
+    background-color: #ef4444;
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-top: 0px;
+    gap: 0.8rem;
+
+}#bwlName, #bwlAnalysis, #bwlOver{
+    font-size: 25px;
+}#bwlName, #bwlAnalysis{
+    flex: 1 1 calc(50% - 20px);/* Allow elements to take up half the width, minus some gap */
+}#bwlName{
+    /* display: inline-block;
+    position: relative;
+    left:0px; */
+    text-align: left;
+    padding-left: 5px;
+}#bwlAnalysis{
+text-align:right;
+padding-right: 5px;
+}
+#individualBwlMaidens, #individualBwlRuns, #individualBwlWickets{
+    font-size: 25px;
+}
+/* @media (max-width:360px) {
+    .batters{
+        width:100vw;
+        height:22vh;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      
+    }
+  } */
+   /* #thisOver > div{
 height:40px;
 width:40px;
 border: 1px solid black ;
@@ -223,8 +273,6 @@ padding: 0.1rem 0.6rem;
 font-size: 1.9rem;
 display: none;
 } */
-#thisOver span{
-    font-size: 1.6rem;
-}/*#thisOver div:nth-child(2){
+ /*#thisOver div:nth-child(2){
     display: none;
 } */
