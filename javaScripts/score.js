@@ -1,4 +1,7 @@
 
+let isWicketFallen = sessionStorage.getItem('isWicFallen') === 'true';
+
+//-----------STARTING OF BOWLER'S INITIALIZATION----------------------------------//
 let bowlerOvers = JSON.parse(window.sessionStorage.getItem('bowlersOvers')) || [];
 
 // If sessionStorage didn't have a value, initialize it as an empty array and push 0
@@ -10,38 +13,105 @@ let bowlersMaiden = JSON.parse(window.sessionStorage.getItem('bowlersMaiden')) |
 if (bowlersMaiden.length === 0) {
     bowlersMaiden.push(0);
 }
-console.log("bowlerMaiden: " + bowlersMaiden);
-
 // For bowlersRuns
 let bowlersRuns = JSON.parse(window.sessionStorage.getItem('bowlersRuns')) || [];
 if (bowlersRuns.length === 0) {
     bowlersRuns.push(0);
 }
-console.log("bowlerRuns: " + bowlersRuns);
-
 // For bowlersWickets
 let bowlersWickets = JSON.parse(window.sessionStorage.getItem('bowlersWickets')) || [];
 if (bowlersWickets.length === 0) {
     bowlersWickets.push(0);
 }
 
-let thisOverRuns = [];
+let thisOverRuns = JSON.parse(window.sessionStorage.getItem('thisOverRuns')) || [];
 
 let bowlerInfoIndex = parseInt(window.sessionStorage.getItem('bowlerInfoIndex')) ? (window.sessionStorage.getItem('bowlerInfoIndex')) : 0;
-
 let bowlerName = window.sessionStorage.getItem('bowlerName');
 let bowlerNames = JSON.parse(window.sessionStorage.getItem('bowlerNames')) || [];
-
 let nextBowlerName = window.sessionStorage.getItem('nextBowlerName');
+console.log("nextbowlerName " + nextBowlerName);
+if (isWicketFallen) {
+
+    let individualBwlMaidens = document.getElementById('individualBwlMaidens');
+    let individualBwlOvers = document.getElementById('bwlOver');
+    let [over, ball] = individualBwlOvers.innerText.split('.');
+    let individualBwlWickets = document.getElementById('individualBwlWickets');
+    let individualBwlRuns = document.getElementById('individualBwlRuns');
+    individualBwlOvers.innerText = bowlerOvers[bowlerInfoIndex];
+    individualBwlRuns.innerText = bowlersRuns[bowlerInfoIndex];
+    individualBwlWickets.innerText = bowlersWickets[bowlerInfoIndex];
+    individualBwlMaidens.innerText = bowlersMaiden[bowlerInfoIndex];
+}
 if (nextBowlerName) {
     console.log('Retrieved bowler:', nextBowlerName);
     bowlerName = nextBowlerName;
     changeBowler();
+} else if (isWicketFallen) {
+    let indvidualBwlName = document.getElementById('bwlName');
+    indvidualBwlName.innerText = bowlerName;
+
 } else {
     let indvidualBwlName = document.getElementById('bwlName');
     indvidualBwlName.innerText = bowlerName;
     bowlerNames.push(bowlerName);
 }
+//-----------ENDING OF BOWLER'S INITIALIZATION----------------------------------//
+
+//-----------STARTING OF BATSMAN'S INITIALIZATION----------------------------------//
+let strikerName = window.sessionStorage.getItem('strikerName');
+let nonStrikerName = window.sessionStorage.getItem('nonStrikerName');
+let strikerScore = sessionStorage.getItem('strkScore') ? parseInt(sessionStorage.getItem('strkScore')) : 0;
+let strikerBalls = sessionStorage.getItem('strkBalls') ? parseInt(sessionStorage.getItem('strkBalls')) : 0;
+let nonStrikerScore = sessionStorage.getItem('nonStrkScore') ? parseInt(sessionStorage.getItem('nonStrkScore')) : 0;
+let nonStrikerBalls = sessionStorage.getItem('nonStrkBalls') ? parseInt(sessionStorage.getItem('nonStrkBalls')) : 0;
+let arr = JSON.parse(sessionStorage.getItem('thisOverArr')) || [];
+let wdArr = JSON.parse(sessionStorage.getItem('thisOverWdArr')) || [];
+let isStriker = window.sessionStorage.getItem('isStriker') ? (sessionStorage.getItem('isStriker')) === 'true' : true;  // Keep track of who is on strike-->
+
+let sName = document.getElementById('sName');
+let nsName = document.getElementById('nsName');
+let sScore = document.getElementById('strikerScore');
+let nsScore = document.getElementById('nonStrikerScore');
+
+if (!sName || !nsName || !sScore || !nsScore) {
+    console.error("One or more elements are missing in the HTML. Check element IDs.");
+    // Exit if elements are not found
+} else {
+
+    if (isWicketFallen) {
+        let newBatsmanName = sessionStorage.getItem('nextBatsmanName'); // New batsman's name
+        console.log("New Batsman Name:", newBatsmanName);
+        if (isStriker) {
+            // Replace striker with new batsman
+            strikerName = newBatsmanName;
+            strikerScore = 0;
+            strikerBalls = 0;
+            sName.innerText = strikerName + "*";
+            nsName.innerText = nonStrikerName;
+        } else {
+            // Replace non-striker with new batsman
+            nonStrikerName = newBatsmanName;
+            nonStrikerScore = 0;
+            nonStrikerBalls = 0;
+            sName.innerText = strikerName;
+            nsName.innerText = nonStrikerName + "*";
+        }
+        // Update score displays
+        sScore.innerText = `${strikerScore}(${strikerBalls})`;
+        nsScore.innerText = `${nonStrikerScore}(${nonStrikerBalls})`;
+
+        // Debug: Check final state
+
+    } else {
+        // Display current batsmen if no wicket has fallen
+        sName.innerText = strikerName;
+        nsName.innerText = nonStrikerName;
+        sScore.innerText = `${strikerScore}(${strikerBalls})`;
+        nsScore.innerText = `${nonStrikerScore}(${nonStrikerBalls})`;
+    }
+}
+//-----------ENDING OF BATSMAN'S INITIALIZATION----------------------------------//
 
 let teamA = window.localStorage.getItem('teamA');
 let teamB = window.localStorage.getItem('teamB');
@@ -52,26 +122,27 @@ let toss = window.localStorage.getItem('tossWonBy');
 let count = 0;
 let CurrRunRate = document.getElementById('CRR');
 let ProjectedScore = document.getElementById("PrjScr");
-let strikerName = window.localStorage.getItem('strikerName');
-let nonStrikerName = window.localStorage.getItem('nonStrikerName');
 
-
-let strikerScore = sessionStorage.getItem('strkScore') ? parseInt(sessionStorage.getItem('strkScore')) : 0;
-console.log(strikerScore);
-let strikerBalls = sessionStorage.getItem('strkBalls') ? parseInt(sessionStorage.getItem('strkBalls')) : 0;
-let nonStrikerScore = sessionStorage.getItem('nonStrkScore') ? parseInt(sessionStorage.getItem('nonStrkScore')) : 0;
-let nonStrikerBalls = sessionStorage.getItem('nonStrkBalls') ? parseInt(sessionStorage.getItem('nonStrkBalls')) : 0;
-let arr = [];
-let isStriker = window.sessionStorage.getItem('isStriker') ? (sessionStorage.getItem('isStriker')) === 'true' : true;  // Keep track of who is on strike-->
-
-let sScore = document.getElementById('strikerScore');
-let nsScore = document.getElementById('nonStrikerScore');
 // Get the parent div element
 const thisOver = document.getElementById('thisOver');
 
 let scoreHeader = document.querySelector('h1');
 
+document.addEventListener('DOMContentLoaded', function () {
+    let thisOver = document.getElementById('thisOver'); // Ensure this element exists
+
+    if (!thisOver) {
+        console.error("Timeline container (thisOver) is still not found. Double-check the HTML element ID.");
+        return;
+    }
+    restoreTimelineState(thisOver);
+});
 window.onload = function () {
+
+    CurrRunRate.innerText = window.sessionStorage.getItem('currRunRate') ? (sessionStorage.getItem('currRunRate')) : "CRR:0";
+    ProjectedScore.innerText = window.sessionStorage.getItem('projScore') ? (sessionStorage.getItem('projScore')) : "Projected Score:0";
+    document.getElementById('ballToBall').value = window.sessionStorage.getItem('ballToBall') ? (window.sessionStorage.getItem('ballToBall')) : "0.0";
+    scoreHeader.innerText = window.sessionStorage.getItem('headingText') ? (window.sessionStorage.getItem('headingText')) : "0/0";
     sScore.innerText = `${strikerScore}(${strikerBalls})`;
     nsScore.innerText = `${nonStrikerScore}(${nonStrikerBalls})`;
     CurrRunRate.innerText = window.sessionStorage.getItem('currRunRate') ? (sessionStorage.getItem('currRunRate')) : "CRR:0";
@@ -79,6 +150,18 @@ window.onload = function () {
     document.getElementById('ballToBall').value = window.sessionStorage.getItem('ballToBall') ? (window.sessionStorage.getItem('ballToBall')) : "0.0";
     scoreHeader.innerText = window.sessionStorage.getItem('headingText') ? (window.sessionStorage.getItem('headingText')) : "0/0";
 };
+
+let [runningOver, runningOverBall] = ballToBall.value.split('.');
+if (isWicketFallen && runningOverBall === '0') {
+    setTimeout(() => {
+        let startNextOver = prompt("Start Next Over?", "answer in yes OR no");
+
+        if (startNextOver.toLowerCase() === "yes") {
+            // Redirect to changeBowler.html to select the bowler
+            window.location.href = 'changeBowler.html';
+        }
+    }, 500);
+}
 // Add the bowler input code here
 // const bowlerInputContainer = document.getElementById('bowlerInputContainer');
 // const bowlerInput = document.getElementById('bowlerInput');
@@ -192,6 +275,8 @@ function thisOverUpdation(b, thisOver, arr, wd) {
                 }
                 // Clear the array as part of the cleanup
                 arr.length = 0;
+                sessionStorage.removeItem('thisOverArr');
+                sessionStorage.removeItem('thisOverWdArr');
             }, 2000)
 
         }
@@ -236,7 +321,6 @@ function run(runs, wic = false) {
 
                 setTimeout(() => {
                     window.sessionStorage.setItem('currRunRate', CurrRunRate.innerText);
-                    console.log(CurrRunRate.innerText);
                     window.sessionStorage.setItem('projScore', ProjectedScore.innerText);
                     window.sessionStorage.setItem('isStriker', isStriker);
                     window.sessionStorage.setItem('ballToBall', document.getElementById('ballToBall').value);
@@ -268,7 +352,7 @@ function run(runs, wic = false) {
         if (!wic) {
             let wic = false;
             let wd = false;
-            
+
             updateBwlOvers(wic, wd, runs, bowlersWickets, bowlersMaiden, bowlersRuns, bowlerOvers, thisOverRuns, bowlerInfoIndex);
             heading.innerText = (eval(Number(score) + Number(runs)) + "/" + wicket);
 
@@ -313,31 +397,45 @@ function run(runs, wic = false) {
                 sScore.innerText = `${strikerScore}(${strikerBalls})`;
             }
             arr.push(Number(runs));
+            wdArr.push(0);
             thisOverUpdation(b, thisOver, arr);
-
-            /*   error finding approach  !!!!!!!
-               console.log((Number(score) + Number(runs)) / ((Number(a) * 6) + Number(b) + 1))
-               console.log((Number(score) + Number(runs)));
-               console.log(((Number(a) * 6) + Number(b) + 1) / 6);
-               console.log((Number(a) * 6));
-               console.log(Number(b) + 1);
-               console.log((Number(score) + Number(runs)) / ((Number(a) * 6) + Number(b) + 1) / 6);
-               console.log((Number(score) + Number(runs)) / totalBalls);
-               */
 
         }//}
         else {
             let wic = true;
             let wd = false;
             heading.innerText = score + '/' + (eval(Number(wicket) + Number(runs)))
-            
+
             //for updation of current run rate when wicket is fallen.
             let totalBalls = ((Number(a) * 6) + Number(b) + 1) / 6;
             crr = (Number(score)) / totalBalls;
             CurrRunRate.innerText = crrText + ":" + crr.toFixed(2);
             arr.push("W");
+            wdArr.push(0);
             thisOverUpdation(b, thisOver, arr);
             updateBwlOvers(wic, wd, runs, bowlersWickets, bowlersMaiden, bowlersRuns, bowlerOvers, thisOverRuns, bowlerInfoIndex);
+            setTimeout(() => {
+                window.sessionStorage.setItem('currRunRate', CurrRunRate.innerText);
+                console.log(CurrRunRate.innerText);
+                window.sessionStorage.setItem('projScore', ProjectedScore.innerText);
+                window.sessionStorage.setItem('isStriker', isStriker);
+                window.sessionStorage.setItem('ballToBall', document.getElementById('ballToBall').value);
+                window.sessionStorage.setItem('headingText', heading.innerText);
+                console.log(heading.innerText);
+                window.sessionStorage.setItem('bowlersOvers', JSON.stringify(bowlerOvers));
+                window.sessionStorage.setItem('bowlerNames', JSON.stringify(bowlerNames));
+                window.sessionStorage.setItem('bowlersMaiden', JSON.stringify(bowlersMaiden));
+                window.sessionStorage.setItem('bowlersRuns', JSON.stringify(bowlersRuns));
+                window.sessionStorage.setItem('bowlersWickets', JSON.stringify(bowlersWickets));
+                window.sessionStorage.setItem('bowlerInfoIndex', bowlerInfoIndex);
+                window.sessionStorage.setItem('isStriker', isStriker);
+                window.sessionStorage.setItem('thisOverRuns', JSON.stringify(thisOverRuns));
+                saveTimelineState(arr);
+            }, 200);
+            setTimeout(() => {
+                window.location.href = 'FallOfWicket.html';
+
+            }, 1000);
         }
 
     }
@@ -380,6 +478,7 @@ function wide(runs) {
     ProjectedScore.innerText = ProjScrText + ":" + ProjectedSrc.toFixed(0);
     thisOverUpdation(b, thisOver, arr, wd);
     updateBwlOvers(wic, wd, runs, bowlersWickets, bowlersMaiden, bowlersRuns, bowlerOvers, thisOverRuns, bowlerInfoIndex);
+    wdArr.push("Wd");
 }
 function changeStrike() {
     isStriker = !isStriker;
@@ -387,8 +486,8 @@ function changeStrike() {
 }
 
 function updateStrike() {
-    let sName = document.getElementById('sName');
-    let nsName = document.getElementById('nsName');
+    sName = document.getElementById('sName');
+    nsName = document.getElementById('nsName');
 
     if (isStriker) {
         sName.innerText = strikerName + "*";
@@ -403,7 +502,7 @@ whoToBat();
 
 
 secondIng.addEventListener('click', () => {
-    secondInnings();  
+    secondInnings();
     secondIng.style.display = "none"
 
 
@@ -434,7 +533,7 @@ function updateBwlOvers(wic, wd, runs, bowlersWickets, bowlersMaiden, bowlersRun
             thisOverRuns.push(Number(runs));
 
             checkMaiden(thisOverRuns, individualBwlMaidens, bowlerInfoIndex, bowlersMaiden);
-            
+
         } else {
             thisOverRuns.push(Number(runs));
             bowlersRuns[bowlerInfoIndex] = Number(bowlersRuns[bowlerInfoIndex]) + Number(runs);
@@ -444,7 +543,7 @@ function updateBwlOvers(wic, wd, runs, bowlersWickets, bowlersMaiden, bowlersRun
             checkMaiden(thisOverRuns, individualBwlMaidens, bowlerInfoIndex, bowlersMaiden);
 
             individualBwlOvers.innerText = Number(bowlersOvers[bowlerInfoIndex]);
-    
+
         }
 
     } else {
@@ -470,7 +569,7 @@ function updateBwlOvers(wic, wd, runs, bowlersWickets, bowlersMaiden, bowlersRun
             bowlersOvers[bowlerInfoIndex] = Number(eval(Number(individualBwlOvers.innerText) + (0.1)).toFixed(1));
             individualBwlOvers.innerText = bowlersOvers[bowlerInfoIndex];
             console.log(bowlerInfoIndex);
-    
+
         }
 
     }
@@ -494,7 +593,7 @@ function updateBwlOvers(wic, wd, runs, bowlersWickets, bowlersMaiden, bowlersRun
 
     if (flag === false) {
         bowlerInfoIndex = bowlerNames.length;
-        console.log(bowlerInfoIndex);
+        console.log("bowlerinfoIndex" + bowlerInfoIndex);
         bowlerNames.push(bowlerName);
         bowlersMaiden.push(0);
         bowlerOvers.push(0);
@@ -528,8 +627,63 @@ function checkMaiden(thisOverRuns, individualBwlMaidens, bowlerInfoIndex, bowler
         individualBwlMaidens.innerText = bowlersMaiden[bowlerInfoIndex];
     }
     thisOverRuns.length = 0;
+    sessionStorage.removeItem('thisOverRuns');
 }
 
+function restoreTimelineState(thisOver) {
+    if (!thisOver) {
+        console.warn("Timeline container (thisOver) is not found.");
+        return; // Exit if thisOver element is not found
+    }
+
+    let savedArr = JSON.parse(sessionStorage.getItem('thisOverArr')) || [];
+
+    let savedWdArr = JSON.parse(sessionStorage.getItem('thisOverWdArr')) || [];
+
+    // savedArr.forEach(run => {
+    //     insertRunsOrWicInThisOver(savedArr, run, thisOver);
+    // });
+    for (let i = 0; i < savedArr.length; i++) {
+
+        insertRunsOrWicInThisOver(savedArr, i, thisOver);
+    }
+    // const thisOver = document.getElementById('thisOver');
+    for (let i = 0; i < savedWdArr.length; i++) {
+
+        if (savedWdArr[i] === 'Wd') {
+            let div = document.createElement("div");
+            div.textContent = "Wd";
+            div.style.height = "40px";
+            div.style.width = "40px";
+            div.style.borderRadius = "50%";
+            div.style.border = "1px solid black";
+            div.style.backgroundColor = "#bef264";
+            div.style.padding = "0.1rem 0.6rem";
+            div.style.fontSize = "1rem";
+            div.style.display = "block";
+            div.style.fontWeight = "bold";
+            insertDivAtPosition(thisOver, div, i + 1);
+        }
+    }
+}
+function insertDivAtPosition(parentDiv, newDiv, index) {
+    // Check if the index is within the bounds
+    if (index < 0 || index > parentDiv.children.length) {
+        console.log("Index out of bounds.");
+        return;
+    }
+
+    // Find the reference node based on the index
+    const referenceNode = parentDiv.children[index];
+
+    // Insert the new div before the reference node
+    parentDiv.insertBefore(newDiv, referenceNode);
+}
+
+function saveTimelineState(arr) {
+    window.sessionStorage.setItem('thisOverArr', JSON.stringify(arr));
+    window.sessionStorage.setItem('thisOverWdArr', JSON.stringify(wdArr));
+}
 //previous mistakes
 /*function thisOverUpdation(b, thisOver, thisOverChildDivs, arr, wic) {
 // const firstChildDiv = thisOver.querySelector('div:nth-child(2)');
@@ -600,3 +754,23 @@ function checkMaiden(thisOverRuns, individualBwlMaidens, bowlerInfoIndex, bowler
  } else {
      thisOver.appendChild(div);
  }*/
+/*   error finding approach  !!!!!!!
+              console.log((Number(score) + Number(runs)) / ((Number(a) * 6) + Number(b) + 1))
+              console.log((Number(score) + Number(runs)));
+              console.log(((Number(a) * 6) + Number(b) + 1) / 6);
+              console.log((Number(a) * 6));
+              console.log(Number(b) + 1);
+              console.log((Number(score) + Number(runs)) / ((Number(a) * 6) + Number(b) + 1) / 6);
+              console.log((Number(score) + Number(runs)) / totalBalls);
+              */
+// Save `arr` and `thisOver` content to sessionStorage
+
+
+// Restore the timeline on page load
+
+
+// Add the save call before redirecting to FallOfWicket page
+
+// Example of restoration on page load
+
+

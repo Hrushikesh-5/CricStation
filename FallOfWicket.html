@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="fallOfWicket.css">
+</head>
+<body>
+    <!-- Inserted form for bowler name and dismissal options -->
+<form id="FallOfWicket">
+    <h3>Fall Of Wiket</h3>
+    
+    <!-- Dismissal method selection -->
+    <div id="dismissalMethodContainer">
+        <label for="dismissalMethod">How did the batsman get out?</label>
+        <select id="dismissalMethod" name="dismissalMethod" required>
+            <option value="bowled">Bowled</option>
+            <option value="catchOut">Catch Out</option>
+            <option value="runOutStriker">Run Out (Striker)</option>
+            <option value="runOutNonStriker">Run Out (Non-Striker)</option>
+            <option value="stumping">Stumping</option>
+            <option value="lbw">LBW</option>
+            <option value="hitWicket">Hit Wicket</option>
+        </select>
+    </div>
+    
+    <!-- New batsman input -->
+    <div id="newBatsmanContainer">
+        <label for="newBatsman">New Batsman</label>
+        <input type="text" id="newBatsman" name="newBatsman" placeholder="Enter new batsman's name" required>
+    </div>
+    
+    <!-- Submit button -->
+    <div class="done">
+        <input type="submit" value="Done">
+    </div>
+</form>
+<script src="javaScripts/fallOfWicket.js" type="text/javascript"></script>
+</body>
+</html>

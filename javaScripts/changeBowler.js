@@ -14,6 +14,12 @@ document.addEventListener('DOMContentLoaded', function () {
         
         // Continue with your logic or page rendering
         alert('Player names submitted successfully!');
-        
+        /*const bowlerNames = ['Bowler 1', 'Bowler 2', 'Bowler 3']; // Add actual bowler names here
+        const datalist = document.getElementById('bowlerList');
+        bowlerNames.forEach(bowler => {
+        let option = document.createElement('option');
+        option.value = bowler;
+        datalist.appendChild(option);
+    */
     });
 });

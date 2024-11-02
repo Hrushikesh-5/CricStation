@@ -9,8 +9,8 @@ document.addEventListener('DOMContentLoaded', function () {
         let bowlerName = document.getElementById('bowler').value;
 
         // Store the player names in local storage
-        localStorage.setItem('strikerName', strikerName);
-        localStorage.setItem('nonStrikerName', nonStrikerName);
+        sessionStorage.setItem('strikerName', strikerName);
+        sessionStorage.setItem('nonStrikerName', nonStrikerName);
         window.sessionStorage.setItem('bowlerName', bowlerName);
         
         window.location.href = 'scorecard.html';
