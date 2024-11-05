@@ -3,81 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CricScorer</title>
-    <link rel="stylesheet" href="info.css">
+    <title>CricStation</title>
+    <link rel="stylesheet" href= "cricStation.css">
 </head>
 <body>
-    <div class="main">
-    <form action="">
+    <!-- Header -->
+    <header>
+        <div class="logo">CricStation</div>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <nav id="nav-menu">
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Live Scores</a></li>
+            <li><a href="#">Scorecards</a></li>
+            <li><a href="#">Matches</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="login.html" class="cta-button">Login / Sign Up</a></li>
+          </ul>
+        </nav>
+      </header>
 
-        <div class="box1">
-
-        <h3 class="green">Teams</h3>
-
-        <div class="Teams">
-            <label for="hostTeam">Enter Team-A</label>
-        <input type="text" id="hostTeam" name="hostTeam" placeholder="Host Team">
-        <label for="visitor">Enter Team-B</label>
-        <input type="text" id="visitor" name="visitor" placeholder="Visitor Team">
-
-        </div>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1>Elevate Your Cricket Scoring Experience</h1>
+      <p>Real-time scores, advanced analytics, and intuitive controls — everything you need in one platform.</p>
+      <button class="cta-button">Start A Match</button>
+      <div class="search-bar">
+        <input type="text" placeholder="Search matches...">
+        <button>Search</button>
+      </div>
     </div>
+  </section>
 
-
-    <div class="box2">
-<!-- checked="checked" -->
-        <h3 class="green">Toss won by?</h3>
-       
-        <div class="toss"> 
-            <label for="host" class="container">
-                <input type="radio"  name="radio" value="host" id="host">Host Team
-                <span class="checkmark"></span>
-              </label>
-
-              <label for="visit" class="container">
-                <input type="radio" name="radio" value="visit" id="visit">Visitor Team
-                <span class="checkmark"></span>
-              </label>
-
-        </div>
+  <!-- Features Section -->
+  <section class="features">
+    <h2>Key Features</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <img src="" alt="Live Score">
+        <h3>Live Score Tracking</h3>
+        <p>Experience every ball live, with instant updates.</p>
+      </div>
+      <div class="feature-card">
+        <img src="" alt="Scorecard">
+        <h3>Detailed Scorecards</h3>
+        <p>Comprehensive statistics and player profiles.</p>
+      </div>
+      <div class="feature-card">
+        <img src="" alt="Stats">
+        <h3>Player Statistics</h3>
+        <p>Track player performances and records seamlessly.</p>
+      </div>
+      <div class="feature-card">
+        <img src="" alt="Fall of Wicket">
+        <h3>Fall of Wicket</h3>
+        <p>Keep track of every crucial moment in the game.</p>
+      </div>
     </div>
+  </section>
 
-    <div class="box3">
-
-        <h3 class="green">Opted to?</h3>
-
-        <div class="toss">
-            <label for="bat" class="container">
-                <input type="radio"  name="batBowl" value="bat" id="bat">Bat
-                <span class="checkmark"></span>
-              </label>
-
-              <label for="bowl" class="container">
-                <input type="radio" name="batBowl" value="bowl" id="bowl">Bowl
-                <span class="checkmark"></span>
-              </label>
-
-        </div>
+  <!-- Testimonials Section -->
+  <section class="testimonials">
+    <h2>User Feedback</h2>
+    <div class="testimonial-carousel">
+      <div class="testimonial">“Absolutely phenomenal! CricStation has changed my scoring experience.” - User A</div>
+      <div class="testimonial">“The best cricket app for live scores and stats.” - User B</div>
+      <div class="testimonial">“Simple, fast, and very reliable.” - User C</div>
     </div>
-  
-  <div class="box4">
+  </section>
 
-    <h3 class="green">Overs?</h3>
-
-    <div class="Teams">
-        <input type="number" id="overs" name="overs" min="1" max="90" value="20">
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 CricStation. All Rights Reserved.</p>
+    <div class="social-icons">
+      <a href="#">Twitter</a>
+      <a href="#">Facebook</a>
+      <a href="#">Instagram</a>
     </div>
-</div>
-<div class="configure">
-    <div class="settings">
-       <a href="javaBegininng.html"> Advanced Settings</a>
-    </div>
-    <div class="start">
-        <input type="submit" value="Start match">
-    </div>
-</div>
+    <form class="newsletter">
+      <input type="email" placeholder="Subscribe to our newsletter">
+      <button type="submit">Subscribe</button>
     </form>
-    <script src="javaScripts/cricket.js" type="text/javascript"></script>
-</div>
+  </footer>
+
+
+  <script src="javaScripts/cricStation.js"></script>
 </body>
 </html>

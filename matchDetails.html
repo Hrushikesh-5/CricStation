@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Details</title>
+    <link rel="stylesheet" href="matchDetails.css">
+</head>
+<body>
+    <div class="main">
+    <form action="">
+
+        <div class="box1">
+
+        <h3 class="green">Teams</h3>
+
+        <div class="Teams">
+            <label for="hostTeam">Enter Team-A</label>
+        <input type="text" id="hostTeam" name="hostTeam" placeholder="Host Team">
+        <label for="visitor">Enter Team-B</label>
+        <input type="text" id="visitor" name="visitor" placeholder="Visitor Team">
+
+        </div>
+    </div>
+
+
+    <div class="box2">
+<!-- checked="checked" -->
+        <h3 class="green">Toss won by?</h3>
+       
+        <div class="toss"> 
+            <label for="host" class="container">
+                <input type="radio"  name="radio" value="host" id="host">Host Team
+                <span class="checkmark"></span>
+              </label>
+
+              <label for="visit" class="container">
+                <input type="radio" name="radio" value="visit" id="visit">Visitor Team
+                <span class="checkmark"></span>
+              </label>
+
+        </div>
+    </div>
+
+    <div class="box3">
+
+        <h3 class="green">Opted to?</h3>
+
+        <div class="toss">
+            <label for="bat" class="container">
+                <input type="radio"  name="batBowl" value="bat" id="bat">Bat
+                <span class="checkmark"></span>
+              </label>
+
+              <label for="bowl" class="container">
+                <input type="radio" name="batBowl" value="bowl" id="bowl">Bowl
+                <span class="checkmark"></span>
+              </label>
+
+        </div>
+    </div>
+  
+  <div class="box4">
+
+    <h3 class="green">Overs?</h3>
+
+    <div class="Teams">
+        <input type="number" id="overs" name="overs" min="1" max="90" value="20">
+    </div>
+</div>
+<div class="configure">
+    <div class="settings">
+       <a href="javaBegininng.html"> Advanced Settings</a>
+    </div>
+    <div class="start">
+        <input type="submit" value="Start match">
+    </div>
+</div>
+    </form>
+    <script src="javaScripts/matchDetails.js" type="text/javascript"></script>
+</div>
+</body>
+</html>
