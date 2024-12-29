@@ -1,0 +1,91 @@
+body {
+    background-color: #181818;
+    /* background: url('/images/stadium.jpg') no-repeat center center/cover; */
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+}
+
+.container {
+    margin-top: 20px;
+}
+.container #heading{
+    background-color: black;
+    border: 2px solid black;
+    border-radius: 5px;
+    height:7vh;
+    max-width: 30vw;
+    position:relative;
+    z-index: 3;
+}
+.match-card {
+    background: linear-gradient(145deg, #222222, #1c1c1c);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    color: #fff;
+}
+
+.match-card h2 {
+    font-size: 1.5rem;
+    margin: 0 0 10px;
+}
+
+.team-names {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.score {
+    font-size: 1.8rem;
+    margin: 10px 0;
+}
+
+.status {
+    background-color: #ff4d4d;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border-radius: 5px;
+}
+
+.overs {
+    font-size: 1rem;
+    color: #a6a6a6;
+}
+
+.footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #a6a6a6;
+}
+
+.footer a {
+    color: #ff4d4d;
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    .match-card {
+        padding: 15px;
+    }
+
+    .match-card h2 {
+        font-size: 1.2rem;
+    }
+
+    .team-names {
+        font-size: 1rem;
+    }
+
+    .score {
+        font-size: 1.5rem;
+    }
+}

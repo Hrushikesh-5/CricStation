@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('Batsman saved:', nextBatsmanName);
         alert('Player names submitted successfully!');
         setTimeout(() => {
-            window.location.href = 'scorecard.html';
+            window.location.href = '/scorecard';
         }, 1000); // Adjust delay if necessary
         
         // Continue with your logic or page rendering

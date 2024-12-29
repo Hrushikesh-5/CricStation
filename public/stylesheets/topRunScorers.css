@@ -1,0 +1,110 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Hero Section */
+.hero {
+    background: url('/images/stadium.jpg') no-repeat center center/cover;
+    position: relative;
+    height: 100vh; /* Ensure full height of the screen */
+    display: flex; /* For centering content */
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    color: white;
+    text-align: center;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Semi-transparent overlay */
+    z-index: 1;
+}
+
+.back-link {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #1e90ff;
+    font-size: 1.2rem;
+    text-decoration: none;
+    z-index: 2;
+}
+
+.title {
+    font-size: 3rem; /* For better emphasis */
+    margin-bottom: 20px;
+    z-index: 2;
+}
+
+/* Stats Container */
+.stats-container {
+    display: flex; /* Align items horizontally */
+    flex-direction: column; /* Stack cards vertically */
+    align-items: center; /* Center cards horizontally */
+    gap: 20px; /* Gap between cards */
+    z-index: 2;
+    width: 80%; /* Set width to prevent cards from spanning too wide */
+}
+
+/* Stat Card */
+.stat-card {
+    background: rgba(255, 255, 255, 0.1); /* Translucent background */
+    border: 2px solid rgba(255, 255, 255, 0.2); /* Border for contrast */
+    backdrop-filter: blur(10px); /* Blur effect on the background */
+    border-radius: 15px; /* Rounded corners */
+    padding: 15px 20px; /* Consistent padding */
+    width: 80%; /* Adjusted width */
+    max-width: 800px; /* Limit card width */
+    display: flex; /* Align content horizontally */
+    justify-content: space-between; /* Space content evenly */
+    align-items: center; /* Vertically center items */
+    color: white;
+    position: relative; /* For positioning the circle */
+}
+
+/* Circular Number */
+.circle {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 40px;
+    height: 40px;
+    background-color: #ff6600; /* Orange color */
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 50%; /* Make it circular */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Bowler Stats */
+.bowler-name {
+    font-size: 1.5rem; /* Font size for better visibility */
+}
+
+.bowler-stats {
+    display: flex; /* Align stats horizontally */
+    gap: 15px; /* Space between stats */
+}
+
+.bowler-stats span {
+    font-size: 1rem; /* Adjust font size for readability */
+    color: #ddd; /* Adjusted color for contrast */
+}
+
+/* Hover Effect */
+.stat-card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    transition: transform 0.3s ease-in-out; /* Smooth transition */
+}

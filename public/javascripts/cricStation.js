@@ -11,5 +11,5 @@ function toggleMenu() {
   const startMatch = document.querySelectorAll('.cta-button');
   // Add an event listener to only the first button (index 0)
 startMatch[1].addEventListener('click', () => {
-    window.location.href = 'matchDetails.html';
+    window.location.href = '/matchDetails';
   });

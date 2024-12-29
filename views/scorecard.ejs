@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ScoreCard</title>
-    <link rel="stylesheet" href="scorecard.css">
+    <link rel="stylesheet" href="/stylesheets/scorecard.css">
 </head>
 <body>
   <h3>0</h3>
@@ -53,6 +53,11 @@
         </div>
       </div>
       <button id="second-ing">2nd Innings</button>
-      <script src="javaScripts/score.js" type="text/javascript"></script>
+      <!-- In your EJS file (scorecard.ejs) -->
+<script>
+  // Pass the matchId to the external JavaScript file
+  window.matchId = "<%= matchDetails._id %>";
+</script>
+      <script src="/javascripts/score.js" ></script>
 </body>
 </html>

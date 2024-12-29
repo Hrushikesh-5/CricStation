@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Matches</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/liveMatches.css">
+</head>
+<body>
+    <div class="container">
+        <div id="heading">
+        <h1 class="text-center text-danger">Live Cricket Matches</h1></div>
+        <p class="text-center text-muted">Real-time updates on live matches</p>
+
+        <% if (liveMatches.length > 0) { %>
+            <% liveMatches.forEach(match => { %>
+                <div class="match-card">
+                    <div class="status">Live</div>
+                    <h2><%= match.teamA %> vs <%= match.teamB %></h2>
+                    <div class="team-names">
+                        <span><%= match.teamA %>: <%= match.teamAruns %>/<%= match.teamAwickets %></span><br>
+                        <span><%= match.teamB %>: <%= match.teamBruns %>/<%= match.teamBwickets %></span>
+                    </div>
+                    <div class="score">Overs: <%= match.currentOver %> / <%= match.overs %></div>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p class="text-center text-muted">No live matches at the moment.</p>
+        <% } %>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 CricStation. Designed with ❤️ for cricket fans. <a href="/">Home</a></p>
+    </div>
+</body>
+</html>

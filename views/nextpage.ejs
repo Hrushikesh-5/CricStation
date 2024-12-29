@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Next Page</title>
     <!-- Add any additional styles or scripts if needed -->
-    <link rel="stylesheet" href="nextpage.css">
+    <link rel="stylesheet" href="/stylesheets/nextpage.css">
 </head>
 <body>
     <form id="playerNamesForm">
@@ -25,7 +25,10 @@
         </div>
         </div>
     </form>
-
-    <script src="javaScripts/nextpage.js" type="text/javascript"></script>
+    <script>
+        // Pass matchId to the global scope
+        window.matchId = "<%= matchId %>";
+    </script>
+    <script src="/javascripts/nextpage.js"></script>
 </body>
 </html>

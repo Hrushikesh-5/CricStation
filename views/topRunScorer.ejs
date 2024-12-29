@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Wicket Takers</title>
+    <link rel="stylesheet" href="/stylesheets/topRunScorers.css">
+</head>
+<body>
+<div class="hero">
+    <a class="back-link" href="/">Back to home</a>
+    <h1 class="title">Top Runs Scorers</h1>
+    <div class="stats-container">
+        <% allBatsmans.forEach(function(batsman, index){  %>
+            
+            <div class="stat-card">
+                <!-- Circular number (positioned in top-left) -->
+                <div class="circle"><%= index + 1 %></div> <!-- Display index + 1 -->
+
+                <!-- Stats container -->
+                <div class="bowler-info">
+                    <h3 class="bowler-name"><%= batsman.name %></h3>
+                    <div class="bowler-stats">
+                        <span>Runs: <%= batsman.runs %></span>
+                        <span>Balls: <%= batsman.balls %></span>
+                    </div>
+                </div>
+            </div>
+
+        <% }) %>
+    </div>
+</div>
+</body>
+</html>

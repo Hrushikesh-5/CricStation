@@ -1,6 +1,56 @@
-
+console.log(window.sessionStorage.getItem('bowlersRuns'));
+console.log(window.sessionStorage.getItem('bowlerNames'));
 let isWicketFallen = sessionStorage.getItem('isWicFallen') === 'true';
+console.log(isWicketFallen);
+window.addEventListener('beforeunload', savePreviousStatsToStorage);
+const dismissalMethod = window.sessionStorage.getItem('dismissalMethod');
+const matchId = window.matchId;  // matchId is now available here
+console.log(matchId);
+if (isWicketFallen) {
+    // Get current striker's stats
+    const strikersName = window.sessionStorage.getItem('strikerName');
+    const nonStrikersName = window.sessionStorage.getItem('nonStrikerName');
+    const newBatsmanName = sessionStorage.getItem('nextBatsmanName');
+    const strikerRun = window.sessionStorage.getItem('strkScore');
+    const strikerBall = window.sessionStorage.getItem('strkBalls');
+    const nonStrikersScore = parseInt(sessionStorage.getItem('nonStrkScore'));
+    const nonStrikerBall = parseInt(sessionStorage.getItem('nonStrkBalls'));
+    let isStriker = window.sessionStorage.getItem('isStriker') === 'true'
 
+    if (isStriker) {
+        const dismissedStrikersData = {
+            name: strikersName, // Current striker
+            runs: strikerRun,
+            balls: strikerBall,
+            howOut: dismissalMethod,
+        };
+        saveBatsmanDataToDB(dismissedStrikersData);
+    } else {
+        const dismissedNonStrikersData = {
+            name: nonStrikersName, // Current striker
+            runs: nonStrikersScore,
+            balls: nonStrikerBall,
+            howOut: dismissalMethod,
+        };
+        saveBatsmanDataToDB(dismissedNonStrikersData);
+    }
+
+    // Save the next batsman's data
+    const nextBatsmanData = {
+        name: newBatsmanName,
+        runs: 0,  // Next batsman starts with 0 runs
+        balls: 0,  // Next batsman starts with 0 balls
+        howOut: null,  // Not out
+    };
+
+    // Save to the database
+    // saveBatsmanDataToDB(dismissedBatsmanData);
+    saveBatsmanDataToDB(nextBatsmanData);
+
+    // Optional: Reset sessionStorage for next batsman
+    // window.sessionStorage.removeItem('nextBatsmanName');
+    // window.sessionStorage.removeItem('dismissalMethod');
+}
 //-----------STARTING OF BOWLER'S INITIALIZATION----------------------------------//
 let bowlerOvers = JSON.parse(window.sessionStorage.getItem('bowlersOvers')) || [];
 
@@ -54,8 +104,22 @@ if (nextBowlerName) {
 } else {
     let indvidualBwlName = document.getElementById('bwlName');
     indvidualBwlName.innerText = bowlerName;
-    bowlerNames.push(bowlerName);
+    let flag = false;
+    for (let i = 0; i < bowlerNames.length; i++) {
+        if (bowlerNames[i] === bowlerName) {
+            flag = true;
+            // bowlerInfoIndex = i;
+            break;
+        } else {
+            flag = false;
+        }
+    }
+    if (flag === false) {
+        bowlerNames.push(bowlerName);
+    }
+    changeBowler();
 }
+
 //-----------ENDING OF BOWLER'S INITIALIZATION----------------------------------//
 
 //-----------STARTING OF BATSMAN'S INITIALIZATION----------------------------------//
@@ -89,6 +153,7 @@ if (!sName || !nsName || !sScore || !nsScore) {
             strikerBalls = 0;
             sName.innerText = strikerName + "*";
             nsName.innerText = nonStrikerName;
+            window.sessionStorage.setItem('strikerName', strikerName);
         } else {
             // Replace non-striker with new batsman
             nonStrikerName = newBatsmanName;
@@ -96,6 +161,7 @@ if (!sName || !nsName || !sScore || !nsScore) {
             nonStrikerBalls = 0;
             sName.innerText = strikerName;
             nsName.innerText = nonStrikerName + "*";
+            window.sessionStorage.setItem('nonStrikerName', nonStrikerName);
         }
         // Update score displays
         sScore.innerText = `${strikerScore}(${strikerBalls})`;
@@ -113,12 +179,12 @@ if (!sName || !nsName || !sScore || !nsScore) {
 }
 //-----------ENDING OF BATSMAN'S INITIALIZATION----------------------------------//
 
-let teamA = window.localStorage.getItem('teamA');
-let teamB = window.localStorage.getItem('teamB');
-let choice = window.localStorage.getItem('optedTo');
+let teamA = window.sessionStorage.getItem('teamA');
+let teamB = window.sessionStorage.getItem('teamB');
+let choice = window.sessionStorage.getItem('optedTo');
 let heading = document.getElementById('h1');
 let secondIng = document.getElementById('second-ing');
-let toss = window.localStorage.getItem('tossWonBy');
+let toss = window.sessionStorage.getItem('tossWonBy');
 let count = 0;
 let CurrRunRate = document.getElementById('CRR');
 let ProjectedScore = document.getElementById("PrjScr");
@@ -148,7 +214,9 @@ window.onload = function () {
     CurrRunRate.innerText = window.sessionStorage.getItem('currRunRate') ? (sessionStorage.getItem('currRunRate')) : "CRR:0";
     ProjectedScore.innerText = window.sessionStorage.getItem('projScore') ? (sessionStorage.getItem('projScore')) : "Projected Score:0";
     document.getElementById('ballToBall').value = window.sessionStorage.getItem('ballToBall') ? (window.sessionStorage.getItem('ballToBall')) : "0.0";
-    scoreHeader.innerText = window.sessionStorage.getItem('headingText') ? (window.sessionStorage.getItem('headingText')) : "0/0";
+    // scoreHeader.innerText = window.sessionStorage.getItem('headingText') ? (window.sessionStorage.getItem('headingText')) : "0/0";
+    // Call this on page load
+    loadPreviousStatsFromStorage();
 };
 
 let [runningOver, runningOverBall] = ballToBall.value.split('.');
@@ -158,7 +226,7 @@ if (isWicketFallen && runningOverBall === '0') {
 
         if (startNextOver.toLowerCase() === "yes") {
             // Redirect to changeBowler.html to select the bowler
-            window.location.href = 'changeBowler.html';
+            window.location.href = '/changeBowler';
         }
     }, 500);
 }
@@ -299,6 +367,8 @@ function run(runs, wic = false) {
     let [a, b] = ballToBall.value.split('.');
     let OverToOver = document.getElementById('overToOver');
     let totalOvers = OverToOver.value.split('/')[1];
+    // isWicketFallen = false;
+    window.sessionStorage.setItem('isWicFallen', false);
     if (wicket < 10) {
 
         if (ballToBall.value === '5.0') {
@@ -320,27 +390,20 @@ function run(runs, wic = false) {
                 ballToBall.value = eval(Number(ballToBall.value) + (0.5)).toFixed(1);
 
                 setTimeout(() => {
-                    window.sessionStorage.setItem('currRunRate', CurrRunRate.innerText);
-                    window.sessionStorage.setItem('projScore', ProjectedScore.innerText);
-                    window.sessionStorage.setItem('isStriker', isStriker);
-                    window.sessionStorage.setItem('ballToBall', document.getElementById('ballToBall').value);
-                    window.sessionStorage.setItem('headingText', heading.innerText);
                     console.log(heading.innerText);
-                    window.sessionStorage.setItem('bowlersOvers', JSON.stringify(bowlerOvers));
-                    window.sessionStorage.setItem('bowlerNames', JSON.stringify(bowlerNames));
-                    window.sessionStorage.setItem('bowlersMaiden', JSON.stringify(bowlersMaiden));
-                    window.sessionStorage.setItem('bowlersRuns', JSON.stringify(bowlersRuns));
-                    window.sessionStorage.setItem('bowlersWickets', JSON.stringify(bowlersWickets));
-                    window.sessionStorage.setItem('bowlerInfoIndex', bowlerInfoIndex);
+                    // rplaced the code written in the savetosession storage function with storage function it self
+                    saveToSessionStorage(heading);
+                    saveScoreToDatabase(teamA, matchId);
                     //   window.sessionStorage.setItem('thisOverRuns', JSON.stringify(thisOverRuns));
                 }, 200);
+
                 // Now redirect to changeBowler.html
                 setTimeout(() => {
                     let startNextOver = prompt("Start Next Over?", "answer in yes OR no");
 
                     if (startNextOver.toLowerCase() === "yes") {
                         // Redirect to changeBowler.html to select the bowler
-                        window.location.href = 'changeBowler.html';
+                        window.location.href = '/changeBowler';
                     }
                 }, 500);
             }
@@ -399,7 +462,11 @@ function run(runs, wic = false) {
             arr.push(Number(runs));
             wdArr.push(0);
             thisOverUpdation(b, thisOver, arr);
-
+            window.sessionStorage.setItem('thisOverRuns', JSON.stringify(thisOverRuns));
+            saveToSessionStorage(heading);
+            saveTimelineState(arr);
+            saveBowlerDataToDB();
+            saveScoreToDatabase(teamA, matchId) ;
         }//}
         else {
             let wic = true;
@@ -414,26 +481,15 @@ function run(runs, wic = false) {
             wdArr.push(0);
             thisOverUpdation(b, thisOver, arr);
             updateBwlOvers(wic, wd, runs, bowlersWickets, bowlersMaiden, bowlersRuns, bowlerOvers, thisOverRuns, bowlerInfoIndex);
+            saveBowlerDataToDB();
             setTimeout(() => {
-                window.sessionStorage.setItem('currRunRate', CurrRunRate.innerText);
-                console.log(CurrRunRate.innerText);
-                window.sessionStorage.setItem('projScore', ProjectedScore.innerText);
-                window.sessionStorage.setItem('isStriker', isStriker);
-                window.sessionStorage.setItem('ballToBall', document.getElementById('ballToBall').value);
-                window.sessionStorage.setItem('headingText', heading.innerText);
-                console.log(heading.innerText);
-                window.sessionStorage.setItem('bowlersOvers', JSON.stringify(bowlerOvers));
-                window.sessionStorage.setItem('bowlerNames', JSON.stringify(bowlerNames));
-                window.sessionStorage.setItem('bowlersMaiden', JSON.stringify(bowlersMaiden));
-                window.sessionStorage.setItem('bowlersRuns', JSON.stringify(bowlersRuns));
-                window.sessionStorage.setItem('bowlersWickets', JSON.stringify(bowlersWickets));
-                window.sessionStorage.setItem('bowlerInfoIndex', bowlerInfoIndex);
-                window.sessionStorage.setItem('isStriker', isStriker);
                 window.sessionStorage.setItem('thisOverRuns', JSON.stringify(thisOverRuns));
+                //rplaced the code written in the savetosession storage function with storage function it self
+                saveToSessionStorage(heading);
                 saveTimelineState(arr);
             }, 200);
             setTimeout(() => {
-                window.location.href = 'FallOfWicket.html';
+                window.location.href = '/FallOfWicket';
 
             }, 1000);
         }
@@ -479,6 +535,10 @@ function wide(runs) {
     thisOverUpdation(b, thisOver, arr, wd);
     updateBwlOvers(wic, wd, runs, bowlersWickets, bowlersMaiden, bowlersRuns, bowlerOvers, thisOverRuns, bowlerInfoIndex);
     wdArr.push("Wd");
+    saveBowlerDataToDB();
+    window.sessionStorage.setItem('thisOverRuns', JSON.stringify(thisOverRuns));
+    saveToSessionStorage(heading);
+    saveTimelineState(arr);
 }
 function changeStrike() {
     isStriker = !isStriker;
@@ -573,7 +633,8 @@ function updateBwlOvers(wic, wd, runs, bowlersWickets, bowlersMaiden, bowlersRun
         }
 
     }
-} function changeBowler() {
+}
+function changeBowler() {
     let individualBwlMaidens = document.getElementById('individualBwlMaidens');
     let individualBwlOvers = document.getElementById('bwlOver');
     let individualBwlWickets = document.getElementById('individualBwlWickets');
@@ -684,6 +745,186 @@ function saveTimelineState(arr) {
     window.sessionStorage.setItem('thisOverArr', JSON.stringify(arr));
     window.sessionStorage.setItem('thisOverWdArr', JSON.stringify(wdArr));
 }
+
+
+
+function saveToSessionStorage(heading) {
+    window.sessionStorage.setItem('currRunRate', CurrRunRate.innerText);
+    window.sessionStorage.setItem('projScore', ProjectedScore.innerText);
+    window.sessionStorage.setItem('isStriker', isStriker);
+    window.sessionStorage.setItem('ballToBall', document.getElementById('ballToBall').value);
+    window.sessionStorage.setItem('headingText', heading.innerText);
+    console.log(heading.innerText);
+    window.sessionStorage.setItem('bowlersOvers', JSON.stringify(bowlerOvers));
+    window.sessionStorage.setItem('bowlerNames', JSON.stringify(bowlerNames));
+    window.sessionStorage.setItem('bowlersMaiden', JSON.stringify(bowlersMaiden));
+    window.sessionStorage.setItem('bowlersRuns', JSON.stringify(bowlersRuns));
+    window.sessionStorage.setItem('bowlersWickets', JSON.stringify(bowlersWickets));
+    window.sessionStorage.setItem('bowlerInfoIndex', bowlerInfoIndex);
+
+    // window.sessionStorage.setItem('thisOverRuns', JSON.stringify(thisOverRuns));
+
+
+}
+
+let previousBowlerStatsMap = {};
+
+function saveBowlerDataToDB() {
+    const currentBowlerStats = {
+        runs: bowlersRuns[bowlerInfoIndex],
+        overs: bowlerOvers[bowlerInfoIndex],
+        maidens: bowlersMaiden[bowlerInfoIndex],
+        wickets: bowlersWickets[bowlerInfoIndex],
+    };
+
+    const bowlerKey = bowlerName; // Unique key for each bowler (e.g., name)
+    if (!previousBowlerStatsMap[bowlerKey]) {
+        previousBowlerStatsMap[bowlerKey] = { runs: 0, overs: 0, maidens: 0, wickets: 0 };
+    }
+
+    const previousStats = previousBowlerStatsMap[bowlerKey];
+    const increment = {
+        runs: currentBowlerStats.runs - previousStats.runs,
+        overs: currentBowlerStats.overs - previousStats.overs,
+        maidens: currentBowlerStats.maidens - previousStats.maidens,
+        wickets: currentBowlerStats.wickets - previousStats.wickets,
+    };
+
+    // Update the map for this bowler
+    previousBowlerStatsMap[bowlerKey] = { ...currentBowlerStats };
+
+    // Send incremental updates to the backend
+    fetch('http://localhost:3000/api/bowler', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            name: bowlerName,
+            ...increment,
+        }),
+    })
+        .then(response => response.json())
+        .then(data => console.log('Bowler data saved:', data))
+        .catch(error => console.error('Error saving bowler data:', error));
+}
+
+
+function savePreviousStatsToStorage() {
+    sessionStorage.setItem('previousBowlerStats', JSON.stringify(previousBowlerStatsMap));
+}
+
+function loadPreviousStatsFromStorage() {
+    const savedStats = sessionStorage.getItem('previousBowlerStats');
+    if (savedStats) {
+        previousBowlerStatsMap = JSON.parse(savedStats);
+    }
+}
+
+// Call this on page load
+// loadPreviousStatsFromStorage();
+
+function saveBatsmanDataToDB(batsmanData) {
+    fetch('http://localhost:3000/api/batsman', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(batsmanData),
+    })
+        .then(response => response.json())
+        .then(data => console.log('Batsman data saved:', data))
+        .catch(error => console.error('Error saving batsman data:', error));
+}
+
+function saveScoreToDatabase(teamA, matchId) {
+    try {
+        let heading = window.sessionStorage.getItem('headingText');
+        
+        // Get current score and wickets from the frontend
+        let [score, wicket] = heading.split('/');
+        
+        wicket = Number(wicket); // Convert to number if needed
+        score = Number(score);
+        const ballToBall = window.sessionStorage.getItem('ballToBall');
+
+        // Get the updated overs from the frontend
+        const overs = Number(ballToBall);
+        let team = teamA;
+
+        // Prepare the data to send
+        const ballDetails = {
+            matchId,
+            team,
+            score,
+            wickets: wicket, // Adjusted for no wicket in this example
+            overs,
+        };
+
+        // Send data to the backend
+        fetch('/saveBallDetails', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(ballDetails),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();  // Parse the response as JSON
+        })
+        .then(data => {
+            console.log('Response data:', data);  // Log the entire response object
+            if (data.message === 'Ball details saved successfully!') {
+                console.log('Ball details saved:', data.message);
+            } else {
+                console.error('Error saving ball details:', data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error sending ball details:', error);  // Log any errors that occur
+        });
+    } catch (error) {
+        console.error('Error in run function:', error);  // Log any other errors
+    }
+}
+
+// async function run(runs, team, matchId) {
+//     try {
+//         // Get current score and wickets from the frontend
+//         let heading = document.querySelector('h1');
+//         let [score, wicket] = heading.innerText.split('/');
+//         wicket = Number(wicket); // Convert to number if needed
+
+//         // Update the frontend score
+//         heading.innerText = `${Number(score) + runs}/${wicket}`;
+
+//         // Get the updated overs from the frontend
+//         const overs = document.getElementById('ballToBall').value;
+
+//         // Send data to the backend
+//         const response = await fetch('/saveBallDetails', {
+//             method: 'POST',
+//             headers: { 'Content-Type': 'application/json' },
+//             body: JSON.stringify({
+//                 matchId,
+//                 team,
+//                 runs,
+//                 wickets: 0, // Adjusted for no wicket in this example
+//                 overs,
+//             }),
+//         });
+
+//         const data = await response.json();
+//         if (response.ok) {
+//             console.log(data.message);
+//         } else {
+//             console.error(data.message);
+//         }
+//     } catch (error) {
+//         console.error('Error sending ball details:', error);
+//     }
+// }
 //previous mistakes
 /*function thisOverUpdation(b, thisOver, thisOverChildDivs, arr, wic) {
 // const firstChildDiv = thisOver.querySelector('div:nth-child(2)');
@@ -772,5 +1013,3 @@ function saveTimelineState(arr) {
 // Add the save call before redirecting to FallOfWicket page
 
 // Example of restoration on page load
-
-
