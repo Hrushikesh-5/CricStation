@@ -486,8 +486,10 @@ function run(runs, wic = false) {
                 window.sessionStorage.setItem('thisOverRuns', JSON.stringify(thisOverRuns));
                 //rplaced the code written in the savetosession storage function with storage function it self
                 saveToSessionStorage(heading);
+                saveScoreToDatabase(teamA, matchId);
                 saveTimelineState(arr);
             }, 200);
+
             setTimeout(() => {
                 window.location.href = '/FallOfWicket';
 
@@ -539,6 +541,7 @@ function wide(runs) {
     window.sessionStorage.setItem('thisOverRuns', JSON.stringify(thisOverRuns));
     saveToSessionStorage(heading);
     saveTimelineState(arr);
+    saveScoreToDatabase(teamA, matchId);
 }
 function changeStrike() {
     isStriker = !isStriker;

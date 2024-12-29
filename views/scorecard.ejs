@@ -57,6 +57,7 @@
 <script>
   // Pass the matchId to the external JavaScript file
   window.matchId = "<%= matchDetails._id %>";
+  window.sessionStorage.setItem('matchId', matchId);
 </script>
       <script src="/javascripts/score.js" ></script>
 </body>

@@ -156,7 +156,7 @@
   }
   
   .feature-card img {
-    width: 50px;
+    width: 150px;
     margin-bottom: 15px;
   }
   
@@ -384,4 +384,16 @@
     header {
       align-items: flex-start; 
     }
+  }
+  #livescore{
+    width:210px;
+    height:130px;
+  }
+  #scorecard{
+    width:185px;
+    height:180px;
+  }
+  #statistics{
+    width:170px;
+    height:160px;
   }

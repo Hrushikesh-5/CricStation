@@ -9,14 +9,21 @@ document.addEventListener('DOMContentLoaded', function () {
         // Get the selected dismissal method from the dropdown
         let dismissalMethod = document.getElementById('dismissalMethod').value;
         let wicket = true;
+        // let matchId = window.sessionStorage.getItem('matchId');
         window.sessionStorage.setItem('isWicFallen',wicket);
         window.sessionStorage.setItem('nextBatsmanName', nextBatsmanName);
         window.sessionStorage.setItem('dismissalMethod', dismissalMethod);
+        
         console.log('Dismissal Method saved:', dismissalMethod);
         console.log('Batsman saved:', nextBatsmanName);
         alert('Player names submitted successfully!');
         setTimeout(() => {
-            window.location.href = '/scorecard';
+const matchId = window.sessionStorage.getItem('matchId');
+            if (!matchId) {
+                alert('Match ID is missing. Cannot redirect to scorecard.');
+                return;
+            }
+            window.location.href = `/scorecard/${matchId}`;
         }, 1000); // Adjust delay if necessary
         
         // Continue with your logic or page rendering

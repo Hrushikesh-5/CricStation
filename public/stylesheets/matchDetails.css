@@ -20,7 +20,7 @@ body{
   width:100vw; */
 }.main{
   min-height:100vh;
-    background: url('/images/stadium.jpg') no-repeat center center fixed; 
+    background: url('/images/A_widescreen_view_of_a_professional_cricket_stadiu.jpg') no-repeat center center fixed; 
     background-size: cover;
     
   
@@ -57,7 +57,7 @@ body{
     border-bottom: 3px solid green;
   }
   .green{
-    color: rgb(58, 227, 58);
+    color: black;
   }.box1{
     /* display: inline-block; */
     margin-top: 20px;
