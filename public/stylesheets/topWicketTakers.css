@@ -8,14 +8,15 @@
 .hero {
     background: url('/images/stadium.jpg') no-repeat center center/cover;
     position: relative;
-    height: 100vh; /* Ensure full height of the screen */
+    min-height: 100vh; /* Ensure the hero section takes at least the full viewport height */
+    padding: 20px 0; /* Add padding for better spacing */
     display: flex; /* For centering content */
     flex-direction: column; /* Stack items vertically */
     align-items: center; /* Center items horizontally */
-    justify-content: center; /* Center items vertically */
+    justify-content: flex-start; /* Start items from the top */
     color: white;
     text-align: center;
-    overflow: hidden;
+    overflow: visible; /* Allow content overflow */
 }
 
 .hero::before {
@@ -27,6 +28,11 @@
     height: 100%;
     background: rgba(0, 0, 0, 0.7); /* Semi-transparent overlay */
     z-index: 1;
+}
+
+body, html {
+    height: 100%; /* Ensure the body and html elements take full height */
+    overflow-y: auto; /* Enable vertical scrolling */
 }
 
 .back-link {
@@ -52,7 +58,9 @@
     align-items: center; /* Center cards horizontally */
     gap: 20px; /* Gap between cards */
     z-index: 2;
-    width: 80%; /* Set width to prevent cards from spanning too wide */
+    width: 90%; /* Set width to prevent cards from spanning too wide */
+    max-width: 1200px; /* Limit container width */
+    margin: 20px 0; /* Add margin for spacing */
 }
 
 /* Stat Card */
@@ -62,13 +70,13 @@
     backdrop-filter: blur(10px); /* Blur effect on the background */
     border-radius: 15px; /* Rounded corners */
     padding: 15px 20px; /* Consistent padding */
-    width: 80%; /* Adjusted width */
-    max-width: 800px; /* Limit card width */
+    width: 100%; /* Adjusted width */
     display: flex; /* Align content horizontally */
     justify-content: space-between; /* Space content evenly */
     align-items: center; /* Vertically center items */
     color: white;
     position: relative; /* For positioning the circle */
+    max-width: 800px; /* Limit card width */
 }
 
 /* Circular Number */

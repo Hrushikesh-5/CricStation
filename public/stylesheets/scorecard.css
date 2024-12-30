@@ -252,6 +252,70 @@ padding-right: 5px;
 #individualBwlMaidens, #individualBwlRuns, #individualBwlWickets{
     font-size: 25px;
 }
+#customModal {
+    display: none; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.7); /* Dark background overlay */
+    z-index: 1000; /* Ensures modal is above other elements */
+}
+
+#customModal div {
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    background: white; /* Simple and clean background */
+    padding: 30px 40px; 
+    border-radius: 15px; 
+    text-align: center; 
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3); /* Clean shadow effect */
+    font-family: 'Arial', sans-serif; 
+    color: #333; /* Dark text color for readability */
+}
+
+#customModal p {
+    margin: 0 0 20px;
+    font-size: 1.5em; /* Larger text for emphasis */
+    font-weight: bold; 
+    color: #4a4a4a; /* Soft gray for the text */
+}
+
+#customModal button {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px; /* Slightly rounded buttons */
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effects */
+}
+
+#customModal button:hover {
+    transform: translateY(-2px); /* Slight "lift" effect */
+}
+
+#yesButton {
+    background-color: #28a745; /* Green for Yes */
+    color: white;
+}
+
+#noButton {
+    background-color: #dc3545; /* Red for No */
+    color: white;
+}
+
+#yesButton:hover {
+    background-color: #218838; /* Slightly darker green on hover */
+}
+
+#noButton:hover {
+    background-color: #c82333; /* Slightly darker red on hover */
+}
 /* @media (max-width:360px) {
     .batters{
         width:100vw;

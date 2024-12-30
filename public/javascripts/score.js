@@ -1,6 +1,9 @@
 console.log(window.sessionStorage.getItem('bowlersRuns'));
 console.log(window.sessionStorage.getItem('bowlerNames'));
 let isWicketFallen = sessionStorage.getItem('isWicFallen') === 'true';
+
+
+
 console.log(isWicketFallen);
 window.addEventListener('beforeunload', savePreviousStatsToStorage);
 const dismissalMethod = window.sessionStorage.getItem('dismissalMethod');
@@ -204,7 +207,18 @@ document.addEventListener('DOMContentLoaded', function () {
     restoreTimelineState(thisOver);
 });
 window.onload = function () {
+    console.log("Window loaded"); // Confirm the onload event is firing.
+    
+    let totalInningsOver = sessionStorage.getItem('overs');
+    console.log("Value from sessionStorage:", totalInningsOver); // Log sessionStorage value.
 
+    let totalOversInThisInnings = document.getElementById('overToOver');
+    if (totalOversInThisInnings) {
+        totalOversInThisInnings.value = "/" + (totalInningsOver || "N/A"); // Use .value for input fields
+        console.log("Updated input value:", totalOversInThisInnings.value);
+    } else {
+        console.log("Element with id 'overToOver' not found.");
+    }
     CurrRunRate.innerText = window.sessionStorage.getItem('currRunRate') ? (sessionStorage.getItem('currRunRate')) : "CRR:0";
     ProjectedScore.innerText = window.sessionStorage.getItem('projScore') ? (sessionStorage.getItem('projScore')) : "Projected Score:0";
     document.getElementById('ballToBall').value = window.sessionStorage.getItem('ballToBall') ? (window.sessionStorage.getItem('ballToBall')) : "0.0";
@@ -222,12 +236,60 @@ window.onload = function () {
 let [runningOver, runningOverBall] = ballToBall.value.split('.');
 if (isWicketFallen && runningOverBall === '0') {
     setTimeout(() => {
-        let startNextOver = prompt("Start Next Over?", "answer in yes OR no");
+        // let startNextOver = prompt("Start Next Over?", "answer in yes OR no");
 
-        if (startNextOver.toLowerCase() === "yes") {
-            // Redirect to changeBowler.html to select the bowler
-            window.location.href = '/changeBowler';
-        }
+        // if (startNextOver.toLowerCase() === "yes") {
+        //     // Redirect to changeBowler.html to select the bowler
+        //     window.location.href = '/changeBowler';
+        // }
+         // Show the initial modal for "Start Next Over?"
+    const modal = document.getElementById('customModal');
+    modal.style.display = 'block';
+
+    // Handle "Yes" button click
+    document.getElementById('yesButton').addEventListener('click', () => {
+        modal.style.display = 'none'; // Hide the initial modal
+
+        // Show a second confirmation modal after a slight delay
+        setTimeout(() => {
+            const confirmModal = document.createElement('div');
+            confirmModal.style = `
+                position: fixed; top: 50%; left: 50%; 
+                transform: translate(-50%, -50%);
+                background: white; padding: 30px 40px; 
+                border-radius: 15px; text-align: center;
+                box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+                font-family: 'Arial', sans-serif; z-index: 1001;
+            `;
+
+            confirmModal.innerHTML = `
+                <p>Are you sure you want to start the next over?</p>
+                <button id="confirmNo">No</button>
+                <button id="confirmYes">Yes</button>
+            `;
+
+            document.body.appendChild(confirmModal);
+
+            // Handle second "Yes" click
+            document.getElementById('confirmYes').addEventListener('click', () => {
+                confirmModal.remove(); // Remove the second modal
+                window.location.href = '/changeBowler'; // Redirect to changeBowler.html
+            });
+
+            // Handle second "No" click
+            document.getElementById('confirmNo').addEventListener('click', () => {
+                confirmModal.remove(); // Remove the second modal
+                console.log("User canceled starting the next over.");
+            });
+        }, 200); // Slight delay to show the second modal after the first one disappears
+    });
+
+    // Handle "No" button click (initial modal)
+    document.getElementById('noButton').addEventListener('click', () => {
+        modal.style.display = 'none'; // Hide the initial modal
+        console.log("User decided not to start the next over.");
+    });
+
     }, 500);
 }
 // Add the bowler input code here
@@ -370,8 +432,8 @@ function run(runs, wic = false) {
     // isWicketFallen = false;
     window.sessionStorage.setItem('isWicFallen', false);
     if (wicket < 10) {
-
-        if (ballToBall.value === '5.0') {
+        
+        if (Number(ballToBall.value) === Number(totalOvers)) { // ballToBall.value === totalOvers ballToBall.value === '5.0'
             if (count === 0) {
                 secondIng.style.display = "block";
                 totalScore = heading.innerText.split('/')[0];
@@ -399,12 +461,64 @@ function run(runs, wic = false) {
 
                 // Now redirect to changeBowler.html
                 setTimeout(() => {
-                    let startNextOver = prompt("Start Next Over?", "answer in yes OR no");
+                    // let startNextOver = prompt("Start Next Over?", "answer in yes OR no");
 
-                    if (startNextOver.toLowerCase() === "yes") {
-                        // Redirect to changeBowler.html to select the bowler
-                        window.location.href = '/changeBowler';
-                    }
+                    // if (startNextOver.toLowerCase() === "yes") {
+                    //     // Redirect to changeBowler.html to select the bowler
+                    //     window.location.href = '/changeBowler';
+                    // }
+                     // Show the custom modal
+    const modal = document.getElementById('customModal');
+    modal.style.display = 'block';
+
+    // Handle "Yes" button click
+    document.getElementById('yesButton').addEventListener('click', () => {
+        modal.style.display = 'none'; // Hide the modal
+        window.location.href = '/changeBowler'; // Redirect to changeBowler.html
+    });
+
+    // // Handle "No" button click
+    // document.getElementById('noButton').addEventListener('click', () => {
+    //     modal.style.display = 'none'; // Just hide the modal
+    //     console.log("User chose 'No'");
+    // }); // Handle "No" button click
+    document.getElementById('noButton').addEventListener('click', () => {
+        modal.style.display = 'none'; // Hide the initial modal
+
+        // Show a second confirmation modal after a delay
+        setTimeout(() => {
+            const confirmModal = document.createElement('div');
+            confirmModal.style = `
+                position: fixed; top: 50%; left: 50%; 
+                transform: translate(-50%, -50%);
+                background: white; padding: 30px 40px; 
+                border-radius: 15px; text-align: center;
+                box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+                font-family: 'Arial', sans-serif; z-index: 1001;
+            `;
+
+            confirmModal.innerHTML = `
+                <p>Are you sure ?</p>
+                <button id="confirmNo">No</button>
+                <button id="confirmYes">Yes</button>
+            `;
+
+            document.body.appendChild(confirmModal);
+
+            // Handle second "Yes" click
+            document.getElementById('confirmYes').addEventListener('click', () => {
+                confirmModal.remove(); // Remove the second modal
+                console.log("User confirmed they don't want to start the next over.");
+            });
+
+            // Handle second "No" click
+            document.getElementById('confirmNo').addEventListener('click', () => {
+                confirmModal.remove(); // Remove the second modal
+                window.location.href = '/changeBowler'; // Redirect to changeBowler.html
+            });
+        }, 200); // Slight delay to show the second modal after the first one disappears
+    });
+    
                 }, 500);
             }
             else {
