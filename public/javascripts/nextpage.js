@@ -15,10 +15,21 @@ const matchId = window.matchId;
         sessionStorage.setItem('strikerName', strikerName);
         sessionStorage.setItem('nonStrikerName', nonStrikerName);
         window.sessionStorage.setItem('bowlerName', bowlerName);
-        
+        console.log(window.sessionStorage.getItem('flag'));
+            // window.location.href = '/scorecard';
+            const matchIdFromScrecard = window.sessionStorage.getItem('matchId');
+            if (!matchIdFromScrecard) {
+                console.log('Match ID is missing. Cannot redirect to scorecard.');
+                window.location.href = `/scorecard/${matchId}`;
+               
+            }else{
+                window.location.href = `/scorecard/${matchIdFromScrecard}`;
+            }
+            
+       
         // window.location.href = '/scorecard';
         // Redirect to scorecard
-        window.location.href = `/scorecard/${matchId}`;
+        // window.location.href = `/scorecard/${matchId}`;
         // Continue with your logic or page rendering
         alert('Player names submitted successfully!');
         

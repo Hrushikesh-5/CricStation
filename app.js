@@ -316,7 +316,10 @@ if (match.status !== 'Live') {
         res.status(500).json({ message: 'Error saving ball details', error });
     }
 });
-
+app.get('/footBall', (req, res) => {
+    // Render the intermediate page
+    res.render('footBall.ejs');
+});
 
 
 app.listen(3000, () => {

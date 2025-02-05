@@ -1,9 +1,83 @@
-console.log(window.sessionStorage.getItem('bowlersRuns'));
-console.log(window.sessionStorage.getItem('bowlerNames'));
+
+
+let count = parseInt(window.sessionStorage.getItem('count')) ? (window.sessionStorage.getItem('count')) : 0;
+if(count == 1){
+    let flag = parseInt(window.sessionStorage.getItem('flag')) || 0;
+console.log(flag);
+    let heading = document.getElementById('h1');
+    
+    let isTeamB = window.sessionStorage.getItem('isTeamB') ? (sessionStorage.getItem('isTeamB')) === 'true' : false;
+    console.log(isTeamB);
+    
+    let isTeamA = window.sessionStorage.getItem('isTeamA') ? (sessionStorage.getItem('isTeamA')) === 'true' : false;
+   let secondInningTeamB = window.sessionStorage.getItem('secondInningTeamB');
+   console.log(secondInningTeamB);
+   let secondInningTeamA = window.sessionStorage.getItem('secondInningTeamA');
+   console.log(secondInningTeamA);
+    if(isTeamB){
+heading.innerText = secondInningTeamB;
+    }else{
+        heading.innerText = secondInningTeamA;
+    }
+    // document.querySelector('h1').innerText = "0/0";
+    // document.querySelector('#ballToBall').value = "0.0";
+    let target = document.querySelector('h2');
+    target.innerText = "target:" + sessionStorage.getItem('totalScore');
+    target.style.display = "block";
+    let scoreHeader = document.querySelector('h1');
+    document.getElementById('ballToBall').value = window.sessionStorage.getItem('ballToBall') ? (window.sessionStorage.getItem('ballToBall')) : "0.0";
+    scoreHeader.innerText = window.sessionStorage.getItem('headingText') ? (window.sessionStorage.getItem('headingText')) : "0/0";
+//     if (document.querySelector('#ballToBall').value === '0.0' && flag === 0) {
+//         // Remove striker and non-striker data from sessionStorage
+//         let sName = document.getElementById('sName');
+// let nsName = document.getElementById('nsName');
+// let sScore = document.getElementById('strikerScore');
+// let nsScore = document.getElementById('nonStrikerScore');
+// let strikerName = window.sessionStorage.getItem('strikerName');
+// let nonStrikerName = window.sessionStorage.getItem('nonStrikerName');
+// let strikerScore = sessionStorage.getItem('strkScore') ? parseInt(sessionStorage.getItem('strkScore')) : 0;
+// let strikerBalls = sessionStorage.getItem('strkBalls') ? parseInt(sessionStorage.getItem('strkBalls')) : 0;
+// let nonStrikerScore = sessionStorage.getItem('nonStrkScore') ? parseInt(sessionStorage.getItem('nonStrkScore')) : 0;
+// let nonStrikerBalls = sessionStorage.getItem('nonStrkBalls') ? parseInt(sessionStorage.getItem('nonStrkBalls')) : 0;
+// document.getElementById('ballToBall').value = "0.0";
+// let scoreHeader = document.querySelector('h1');
+//     scoreHeader.innerText = "0/0";
+//     window.sessionStorage.setItem('headingText', heading.innerText);
+//     window.sessionStorage.setItem('ballToBall', document.getElementById('ballToBall').value);
+//         window.sessionStorage.removeItem('strikerName');
+//         window.sessionStorage.removeItem('nonStrikerName');
+//         window.sessionStorage.removeItem('strkScore');
+//         window.sessionStorage.removeItem('strkBalls');
+//         window.sessionStorage.removeItem('nonStrkScore');
+//         window.sessionStorage.removeItem('nonStrkBalls');
+        
+//         // Reset the variables to default values
+//         strikerName = '';
+//         nonStrikerName = '';
+//         strikerScore = 0;
+//         strikerBalls = 0;
+//         nonStrikerScore = 0;
+//         nonStrikerBalls = 0;
+    
+//         // Update the score display to reflect the reset
+//         sName.innerText = '';
+//         nsName.innerText = '';
+//         sScore.innerText = '0(0)';
+//         nsScore.innerText = '0(0)';
+    
+//         // Set flag to 1 to indicate the redirect has already occurred
+//         window.sessionStorage.setItem('flag', '1');
+//         console.log(window.sessionStorage.getItem('flag'));
+    
+//         // Redirect to the next page
+//         setTimeout(() => {
+//             window.location.href = '/nextPage'; // Replace '/nextPage' with the actual route
+//         },1000);
+        
+//     }
+    
+}
 let isWicketFallen = sessionStorage.getItem('isWicFallen') === 'true';
-
-
-
 console.log(isWicketFallen);
 window.addEventListener('beforeunload', savePreviousStatsToStorage);
 const dismissalMethod = window.sessionStorage.getItem('dismissalMethod');
@@ -188,7 +262,7 @@ let choice = window.sessionStorage.getItem('optedTo');
 let heading = document.getElementById('h1');
 let secondIng = document.getElementById('second-ing');
 let toss = window.sessionStorage.getItem('tossWonBy');
-let count = 0;
+
 let CurrRunRate = document.getElementById('CRR');
 let ProjectedScore = document.getElementById("PrjScr");
 
@@ -235,6 +309,17 @@ window.onload = function () {
 
 let [runningOver, runningOverBall] = ballToBall.value.split('.');
 if (isWicketFallen && runningOverBall === '0') {
+    // setTimeout(function () {//temporary until nextOver Feature is added
+    //     let childDivs = thisOver.querySelectorAll('div');
+    //     for (let i = 0; i < childDivs.length; i++) {
+    //         let divDisappear = childDivs[i];
+    //         divDisappear.remove(); // Remove the div element
+    //     }
+    //     // Clear the array as part of the cleanup+
+    //     arr.length = 0;
+    //     sessionStorage.removeItem('thisOverArr');
+    //     sessionStorage.removeItem('thisOverWdArr');
+    // }, 50)
     setTimeout(() => {
         // let startNextOver = prompt("Start Next Over?", "answer in yes OR no");
 
@@ -324,6 +409,12 @@ function showBowlerInput(bowlerInfoIndex) {
 // Get all child div elements
 // const thisOverChildDivs = thisOver.querySelectorAll('div');
 function whoToBat() {
+    // let count = parseInt(window.sessionStorage.getItem('count')) ? (window.sessionStorage.getItem('count')) : 0;
+    console.log("inside who to bat " + count == 1);
+    console.log(count);
+    if (count == 1) {
+        return; // Skip execution if second innings
+    }
     //**  updateBatterDisplay();-->JUST CHANGED
 
     if (toss === 'host') {
@@ -346,8 +437,11 @@ function whoToBat() {
 reset = () => {
     document.querySelector('h1').innerText = "0/0";
     document.querySelector('#ballToBall').value = "0.0";
+    window.sessionStorage.setItem('ballToBall', document.getElementById('ballToBall').value);
+    window.sessionStorage.setItem('headingText', heading.innerText);// team name is saved
+    console.log(window.sessionStorage.getItem('headingText'));
     let target = document.querySelector('h2');
-    target.innerText = "target:" + localStorage.getItem('totalScore');
+    target.innerText = "target:" + sessionStorage.getItem('totalScore');
     target.style.display = "block";
     isStriker = true;
     updateStrike();//JUST CHANGED
@@ -355,11 +449,22 @@ reset = () => {
 secondInnings = () => {
     if (heading.innerText === teamA) {
         heading.innerText = teamB;
+        window.sessionStorage.setItem('secondInningTeamB', teamB);
+        window.sessionStorage.setItem('isTeamB', true);
         reset();
+        //  Redirect to the next page
+        setTimeout(() => {
+            window.location.href = '/nextPage'; // Replace '/nextPage' with the actual route
+        },1000);
         return;
     } else {
         heading.innerText = teamA;
+        window.sessionStorage.setItem('secondInningTeamA', teamA);
+        window.sessionStorage.setItem('isTeamA', true);
         reset();
+        setTimeout(() => {
+            window.location.href = '/nextPage'; // Replace '/nextPage' with the actual route
+        },1000);
         return;
     }
 }
@@ -421,6 +526,9 @@ function thisOverUpdation(b, thisOver, arr, wd) {
 }
 
 function run(runs, wic = false) {
+    console.log("inside run function");
+    console.log(window.sessionStorage.getItem('headingText'));
+    console.log(count);
     let [crrText, crr] = CurrRunRate.innerText.split(':');
     let [ProjScrText, ProjectedSrc] = ProjectedScore.innerText.split(':');
     let heading = document.querySelector('h1');
@@ -430,25 +538,34 @@ function run(runs, wic = false) {
     let OverToOver = document.getElementById('overToOver');
     let totalOvers = OverToOver.value.split('/')[1];
     // isWicketFallen = false;
+    console.log(ballToBall.value);
+    console.log(totalOvers);
+    console.log(wicket);
     window.sessionStorage.setItem('isWicFallen', false);
     if (wicket < 10) {
-        
-        if (Number(ballToBall.value) === Number(totalOvers)) { // ballToBall.value === totalOvers ballToBall.value === '5.0'
+        console.log("inside checking wicket less than 10");
+        if (Number(ballToBall.value) === Number(totalOvers)) { 
+            // ballToBall.value === totalOvers ballToBall.value === '5.0'
+            console.log("inside over checking");
             if (count === 0) {
+                console.log("inside count check");
                 secondIng.style.display = "block";
                 totalScore = heading.innerText.split('/')[0];
-                window.localStorage.setItem('totalScore', totalScore)
+                window.sessionStorage.setItem('totalScore', totalScore)
                 count++;
+                window.sessionStorage.setItem('count', count);
                 return;
             }
 
             else {
+                console.log("inside else check;");
                 return;
             }
 
         }
         else {
             if (b > 4) {
+                console.log("inside ball greater than check");
                 ballToBall.value = eval(Number(ballToBall.value) + (0.5)).toFixed(1);
 
                 setTimeout(() => {
@@ -522,6 +639,7 @@ function run(runs, wic = false) {
                 }, 500);
             }
             else {
+                console.log("inside all less than check");
                 ballToBall.value = eval(Number(ballToBall.value) + (0.1)).toFixed(1);
             }
         }
@@ -529,7 +647,7 @@ function run(runs, wic = false) {
         if (!wic) {
             let wic = false;
             let wd = false;
-
+console.log("inside updatin runs");
             updateBwlOvers(wic, wd, runs, bowlersWickets, bowlersMaiden, bowlersRuns, bowlerOvers, thisOverRuns, bowlerInfoIndex);
             heading.innerText = (eval(Number(score) + Number(runs)) + "/" + wicket);
 
@@ -583,6 +701,7 @@ function run(runs, wic = false) {
             saveScoreToDatabase(teamA, matchId) ;
         }//}
         else {
+            console.log("insode wicket fallen check");
             let wic = true;
             let wd = false;
             heading.innerText = score + '/' + (eval(Number(wicket) + Number(runs)))
@@ -602,7 +721,7 @@ function run(runs, wic = false) {
                 saveToSessionStorage(heading);
                 saveScoreToDatabase(teamA, matchId);
                 saveTimelineState(arr);
-            }, 200);
+            }, 400);
 
             setTimeout(() => {
                 window.location.href = '/FallOfWicket';
@@ -613,10 +732,12 @@ function run(runs, wic = false) {
     }
     else {
         if (count === 0) {
+            console.log("inside all out check");
             secondIng.style.display = "block";
             totalScore = heading.innerText.split('/')[0];
-            window.localStorage.setItem('totalScore', totalScore)
+            window.sessionStorage.setItem('totalScore', totalScore)
             count++;
+            window.sessionStorage.setItem('count', count);
             alert("No More Wickets Left");
             return;
         }
@@ -937,7 +1058,7 @@ function loadPreviousStatsFromStorage() {
         previousBowlerStatsMap = JSON.parse(savedStats);
     }
 }
-
+ 
 // Call this on page load
 // loadPreviousStatsFromStorage();
 
