@@ -107,6 +107,9 @@ app.get('/about', (req,res) => {
 app.get('/matchDetails', isLoggedIn, (req, res) => {
     res.render('matchDetails.ejs');
 });
+app.get('/news', isLoggedIn, (req,res) => {
+    res.render('news.ejs');
+})
 app.get('/liveScores', isLoggedIn, async (req,res) => {
     // let allBowlers = await Bowler.find();
     // res.render("topWicketTaker.ejs", {allBowlers});

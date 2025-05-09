@@ -1,0 +1,334 @@
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🏏 Cricket News - Live Updates</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background: #121212;
+      color: #f0f0f0;
+    }
+
+    header {
+      padding: 20px;
+      background: #1e1e1e;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.2em;
+      color: #00bcd4;
+      letter-spacing: 1px;
+    }
+
+    .news-container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .article {
+      background: #1f1f1f;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+      transition: transform 0.2s ease;
+    }
+
+    .article:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 20px rgba(0, 188, 212, 0.3);
+    }
+
+    .article h3 {
+      font-size: 1.2em;
+      color: #ffffff;
+      margin: 0 0 10px;
+    }
+
+    .article p {
+      font-size: 0.95em;
+      color: #cfcfcf;
+      line-height: 1.5;
+    }
+
+    .article a {
+      display: inline-block;
+      margin-top: 12px;
+      color: #00bcd4;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .article a:hover {
+      text-decoration: underline;
+    }
+
+    .loading {
+      grid-column: 1 / -1;
+      text-align: center;
+      font-size: 1.1em;
+      color: #aaa;
+    }
+
+    @media screen and (max-width: 500px) {
+      header h1 {
+        font-size: 1.5em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🏏 Live Cricket News</h1>
+  </header>
+
+  <div class="news-container" id="newsContainer">
+    <p class="loading">Fetching the latest cricket news...</p>
+  </div>
+
+  <script>
+    const apiKey = "cf08df2bfa754753b90b233a4bafc7f0";
+    const newsContainer = document.getElementById("newsContainer");
+
+    fetch(`https://newsapi.org/v2/everything?q=cricket&language=en&sortBy=publishedAt&pageSize=12&apiKey=${apiKey}`)
+      .then(response => response.json())
+      .then(data => {
+        newsContainer.innerHTML = "";
+
+        if (data.articles && data.articles.length > 0) {
+          data.articles.forEach(article => {
+            const card = document.createElement("div");
+            card.classList.add("article");
+
+            card.innerHTML = `
+              <h3>${article.title}</h3>
+              <p>${article.description || "No description available."}</p>
+              <a href="${article.url}" target="_blank">Read more →</a>
+            `;
+
+            newsContainer.appendChild(card);
+          });
+        } else {
+          newsContainer.innerHTML = "<p class='loading'>No cricket news found.</p>";
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        newsContainer.innerHTML = "<p class='loading'>Error loading news.</p>";
+      });
+  </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🏏 Elite Cricket News - Live Updates</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: linear-gradient(135deg, #0f0f0f 0%, #1b1b1b 100%);
+      color: #fff;
+      padding: 0 20px;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 10px 20px;
+    }
+
+    /* header h1 {
+      font-size: 2.8em;
+      background: linear-gradient(90deg, #ff6a00, #ffd500);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
+    } */
+header h1 {
+  font-size: 2.8em;
+  background: linear-gradient(90deg, #ff6a00, #ffd500);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 1px;
+}
+    .news-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      max-width: 1300px;
+      margin: 0 auto 60px;
+      padding-top: 10px;
+      animation: fadeIn 0.8s ease;
+    }
+
+    .article {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(255, 165, 0, 0.12);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(255, 165, 0, 0.1);
+    }
+
+    .article:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 24px rgba(255, 165, 0, 0.25);
+    }
+
+    .content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .article h3 {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+
+    .article p {
+      font-size: 0.95em;
+      color: #cfcfcf;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .date-badge {
+      background: #ffa500;
+      color: #000;
+      font-size: 0.75em;
+      padding: 4px 10px;
+      border-radius: 50px;
+      font-weight: 600;
+      box-shadow: 0 0 6px rgba(255, 165, 0, 0.3);
+    }
+
+    .read-more {
+      text-decoration: none;
+      color: #ffd54f;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .read-more:hover {
+      color: #fff176;
+      text-decoration: underline;
+    }
+
+    .loading {
+      text-align: center;
+      font-size: 1.1em;
+      padding: 40px 0;
+      color: #aaa;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2em;
+      }
+
+      .article h3 {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🏏 Elite Cricket News</h1>
+  </header>
+
+  <div class="news-container" id="newsContainer">
+    <p class="loading">Loading fresh cricket stories for you...</p>
+  </div>
+
+  <script>
+    const apiKey = "cf08df2bfa754753b90b233a4bafc7f0";
+    const newsContainer = document.getElementById("newsContainer");
+
+    fetch(`https://newsapi.org/v2/everything?q=cricket&language=en&sortBy=publishedAt&pageSize=15&apiKey=${apiKey}`)
+      .then(response => response.json())
+      .then(data => {
+        newsContainer.innerHTML = "";
+
+        if (data.articles && data.articles.length > 0) {
+          data.articles.forEach(article => {
+            const articleDiv = document.createElement("div");
+            articleDiv.className = "article";
+
+            const date = new Date(article.publishedAt).toLocaleDateString("en-IN", {
+              day: 'numeric',
+              month: 'short',
+              year: 'numeric'
+            });
+
+            articleDiv.innerHTML = `
+              <div class="content">
+                <h3>${article.title}</h3>
+                <p>${article.description || "No description available."}</p>
+                <div class="meta">
+                  <span class="date-badge">${date}</span>
+                  <a href="${article.url}" class="read-more" target="_blank">Read more →</a>
+                </div>
+              </div>
+            `;
+
+            newsContainer.appendChild(articleDiv);
+          });
+        } else {
+          newsContainer.innerHTML = "<p class='loading'>No cricket news found.</p>";
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        newsContainer.innerHTML = "<p class='loading'>Error fetching news. Please try again later.</p>";
+      });
+  </script>
+</body>
+</html>
+
+
