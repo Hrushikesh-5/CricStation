@@ -1,6 +1,8 @@
 
 
 let count = parseInt(window.sessionStorage.getItem('count')) ? (window.sessionStorage.getItem('count')) : 0;
+let thisOverIndividualChartRuns = parseInt(window.sessionStorage.getItem('thisOverIndividualRuns')) ? (window.sessionStorage.getItem('thisOverIndividualRuns')) : 0;
+console.log("at page load this over runs "+ thisOverIndividualChartRuns)
 if(count == 1){
     let flag = parseInt(window.sessionStorage.getItem('flag')) || 0;
 console.log(flag);
@@ -140,6 +142,9 @@ let bowlersMaiden = JSON.parse(window.sessionStorage.getItem('bowlersMaiden')) |
 if (bowlersMaiden.length === 0) {
     bowlersMaiden.push(0);
 }
+let chartThisOverRuns = JSON.parse(window.sessionStorage.getItem('chartThisOverRuns')) || [];
+let chartThisOver = JSON.parse(window.sessionStorage.getItem('chartThisOver')) || [];
+ 
 // For bowlersRuns
 let bowlersRuns = JSON.parse(window.sessionStorage.getItem('bowlersRuns')) || [];
 if (bowlersRuns.length === 0) {
@@ -526,6 +531,7 @@ function thisOverUpdation(b, thisOver, arr, wd) {
 }
 
 function run(runs, wic = false) {
+    
     console.log("inside run function");
     console.log(window.sessionStorage.getItem('headingText'));
     console.log(count);
@@ -567,12 +573,22 @@ function run(runs, wic = false) {
             if (b > 4) {
                 console.log("inside ball greater than check");
                 ballToBall.value = eval(Number(ballToBall.value) + (0.5)).toFixed(1);
-
+                chartThisOver.push(ballToBall.value);
+                console.log("chartThisOver"+chartThisOver);
+                window.sessionStorage.setItem('chartThisOver', JSON.stringify(chartThisOver));
+                thisOverIndividualChartRuns = Number(thisOverIndividualChartRuns) + Number(runs);
+                chartThisOverRuns.push(thisOverIndividualChartRuns);
+                window.sessionStorage.setItem('chartThisOverRuns', JSON.stringify(chartThisOverRuns)) 
+                 console.log("this is updated");
+                console.log("chartThisOverRuns"+chartThisOverRuns);
+                
                 setTimeout(() => {
                     console.log(heading.innerText);
                     // rplaced the code written in the savetosession storage function with storage function it self
                     saveToSessionStorage(heading);
                     saveScoreToDatabase(teamA, matchId);
+                    thisOverIndividualChartRuns = 0;
+                    sessionStorage.removeItem('thisOverIndividualRuns');
                     //   window.sessionStorage.setItem('thisOverRuns', JSON.stringify(thisOverRuns));
                 }, 200);
 
@@ -650,7 +666,9 @@ function run(runs, wic = false) {
 console.log("inside updatin runs");
             updateBwlOvers(wic, wd, runs, bowlersWickets, bowlersMaiden, bowlersRuns, bowlerOvers, thisOverRuns, bowlerInfoIndex);
             heading.innerText = (eval(Number(score) + Number(runs)) + "/" + wicket);
-
+            thisOverIndividualChartRuns = Number(thisOverIndividualChartRuns) + Number(runs);
+            console.log("ThisOverIndividualChartRuns = "+ thisOverIndividualChartRuns);
+            
             //code for updation of current run rate.
             let totalBalls = ((Number(a) * 6) + Number(b) + 1) / 6;
             crr = (Number(score) + Number(runs)) / totalBalls;
@@ -705,7 +723,8 @@ console.log("inside updatin runs");
             let wic = true;
             let wd = false;
             heading.innerText = score + '/' + (eval(Number(wicket) + Number(runs)))
-
+            console.log("thisoverchart under wicket"+ thisOverIndividualChartRuns);
+sessionStorage.setItem("thisOverIndividualRuns",thisOverIndividualChartRuns);
             //for updation of current run rate when wicket is fallen.
             let totalBalls = ((Number(a) * 6) + Number(b) + 1) / 6;
             crr = (Number(score)) / totalBalls;
@@ -759,6 +778,8 @@ function wide(runs) {
     let heading = document.querySelector('h1');
     let [score, wicket] = heading.innerText.split('/');
     totalScore = heading.innerText.split('/')[0];
+    thisOverIndividualChartRuns = Number(thisOverIndividualChartRuns) + Number(runs);
+    console.log("inside wide function this  over rujns"+thisOverIndividualChartRuns ); 
     window.localStorage.setItem('totalScore', totalScore)
     heading.innerText = (eval(Number(score) + Number(runs)) + "/" + wicket)
     wideCount++;

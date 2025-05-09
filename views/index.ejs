@@ -5,20 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CricStation</title>
     <link rel="stylesheet" href= "/stylesheets/cricStation.css">
+    <link rel="manifest" href="/manifest.json">
 </head>
 <body>
     <!-- Header -->
     <header>
-        <div class="logo">CricStation</div>
+        <div class="logo">InningsPlay</div>
         <div class="menu-toggle" onclick="toggleMenu()">☰</div>
         <nav id="nav-menu">
           <ul>
             <li><a href="/liveScores">Live Scores</a></li>
-            <li><a href="/footBall">footBall</a></li>
+            <!-- <li><a href="/footBall">footBall</a></li> -->
             <li><a href="/topRunsScorers">Top Runs Scorers</a></li>
             <li><a href="/topWicketTakers">Top Wicket Takers</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="/loginpage" class="cta-button">Login / Sign Up</a></li>
+            <li><a href="/about">About</a></li>
+             <!-- <li><a href="/loginpage" class="cta-button">Login / Sign Up</a></li> -->
+             <li><a href="/loginpage" class="cta-button" id="loginButton">Login / Sign Up</a></li>
+             <li><a href="/logout" class="cta-button" id="logoutButton" style="display: none;">Logout</a></li>
+
           </ul>
         </nav>
       </header>
@@ -29,7 +33,7 @@
     <div class="hero-content">
       <h1>Elevate Your Cricket Scoring Experience</h1>
       <p>Real-time scores, advanced analytics, and intuitive controls — everything you need in one platform.</p>
-      <button class="cta-button">Start A Match</button>
+      <button class="cta-button" id="startMatchBtn">Start A Match</button>
       <div class="search-bar">
         <input type="text" placeholder="Search matches...">
         <button>Search</button>
@@ -68,7 +72,7 @@
   <section class="testimonials">
     <h2>User Feedback</h2>
     <div class="testimonial-carousel">
-      <div class="testimonial">“Absolutely phenomenal! CricStation has changed my scoring experience.” - User A</div>
+      <div class="testimonial">“Absolutely phenomenal! InningsPlay has changed my scoring experience.” - User A</div>
       <div class="testimonial">“The best cricket app for live scores and stats.” - User B</div>
       <div class="testimonial">“Simple, fast, and very reliable.” - User C</div>
     </div>
@@ -76,7 +80,7 @@
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2024 CricStation. All Rights Reserved.</p>
+    <p>&copy; 2025 InningsPlay. All Rights Reserved.</p>
     <div class="social-icons">
       <a href="#">Twitter</a>
       <a href="#">Facebook</a>
@@ -90,5 +94,17 @@
 
 
   <script src="/javascripts/cricStation.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/service-worker.js")
+        .then((registration) => {
+          console.warn("Service Worker registered with scope:", registration.scope);
+        })
+        .catch((error) => {
+          console.error("Service Worker registration failed:", error);
+        });
+    }
+  </script>
 </body>
 </html>

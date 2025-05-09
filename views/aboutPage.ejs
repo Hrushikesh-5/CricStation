@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About CricStation</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(120deg, #0f0f0f, #1a1a1a);
+      color: #f1f1f1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 30px 15px;
+    }
+
+    .about-wrapper {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 900px;
+      width: 100%;
+      box-shadow: 0 0 30px rgba(0, 255, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 15px;
+      color: #00ff88;
+      text-align: center;
+    }
+
+    p {
+      font-size: 1.15rem;
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+
+    h2 {
+      font-size: 1.7rem;
+      margin: 30px 0 15px;
+      color: #fcd703;
+      border-left: 4px solid #fcd703;
+      padding-left: 12px;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    ul li {
+      margin-bottom: 10px;
+      position: relative;
+      padding-left: 25px;
+    }
+
+    ul li::before {
+      content: "✔";
+      position: absolute;
+      left: 0;
+      color: #00ff88;
+      font-weight: bold;
+    }
+
+    .home-button {
+      display: inline-block;
+      margin-top: 40px;
+      background-color: #00ff88;
+      color: #000;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 12px #00ff88;
+    }
+
+    .home-button:hover {
+      background-color: #0aff7a;
+      box-shadow: 0 0 20px #00ff88;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      .about-wrapper {
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="about-wrapper">
+    <h1>About CricStation</h1>
+    <p><strong>CricStation</strong> is your all-in-one cricket scoring and match management platform — built to revolutionize how grassroots, college, and competitive cricket is experienced and analyzed.</p>
+
+    <h2>🚀 What We Offer</h2>
+    <ul>
+      <li>Live Ball-by-Ball Scoring</li>
+      <li>Instant Statistics for Batters & Bowlers</li>
+      <li>Smart Score Projections</li>
+      <li>Interactive Graphs & Charts</li>
+      
+    </ul>
+
+    <h2>🎯 Our Mission</h2>
+    <p>To bring world-class scoring technology to local and amateur matches — making data, performance, and excitement accessible to every player, team, and fan.</p>
+
+    <h2>⚙️ Powered by Technology</h2>
+    <p>Built on the <strong>MERN Stack</strong> (MongoDB, Express, React, Node), CricStation delivers a seamless experience across devices with lightning-fast performance and secure match storage.</p>
+
+    <h2>🏏 For the Love of the Game</h2>
+    <p>Whether you're a captain, coach, scorer, or fan — CricStation is designed with your needs in mind. Simple. Powerful. Cricket, redefined.</p>
+
+    <a href="/" class="home-button"><i class="fas fa-home"></i> Back to Home</a>
+  </div>
+</body>
+</html>
+
+

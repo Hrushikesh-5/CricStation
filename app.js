@@ -48,7 +48,8 @@ bcrypt.hash(password, salt, async (err, hash) => {
     });
    let token = jwt.sign({email: email, userid: user._id}, "shhhh");
    res.cookie("token", token);
-   res.send("registered");
+  // response.send("registered");
+   res.redirect('/');
 })
 });
 })
@@ -79,7 +80,7 @@ res.redirect('/loginpage');
 });
 
 function isLoggedIn(req, res, next){
-    if(req.cookies.token === "") res.send("you must be logged in");// when verified after checcking orther things res.redirect('/loginpage');
+    if(req.cookies.token === "") res.redirect('/loginpage');//res.send("you must be logged in");when verified after checcking orther things res.redirect('/loginpage');
     else{
         let data = jwt.verify(req.cookies.token, "shhhh");
         req.user = data;
@@ -87,6 +88,21 @@ function isLoggedIn(req, res, next){
     }
     
 }
+app.get('/about', (req,res) => {
+    res.render('aboutPage');
+})
+// app.get('/', (req, res) => {
+//     let isLoggedIn = false;
+//     try {
+//         if (req.cookies.token) {
+//             const user = jwt.verify(req.cookies.token, "shhhh");
+//             isLoggedIn = true;
+//         }
+//     } catch (err) {
+//         isLoggedIn = false;
+//     }
+//     res.render('login', { isLoggedIn }); // adjust 'login' to your actual ejs file name
+// });
 
 app.get('/matchDetails', isLoggedIn, (req, res) => {
     res.render('matchDetails.ejs');
@@ -168,7 +184,9 @@ res.render('changeBowler.ejs');
 app.get('/FallOfWicket', isLoggedIn, (req, res) =>{
 res.render('FallOfWicket.ejs');
 });
-
+app.get('/chart', (req, res) => {
+    res.render('chart.ejs'); // or res.sendFile() if it's a static HTML file
+  });
 // Save bowler data
 // app.post('/api/bowler', async (req, res) => {
 //     const { name, runs, overs, maidens, wickets } = req.body;
@@ -320,7 +338,15 @@ app.get('/footBall', (req, res) => {
     // Render the intermediate page
     res.render('footBall.ejs');
 });
-
+app.get('/api/check-auth', (req, res) => {
+    const token = req.cookies.token;
+    if (!token) return res.json({ authenticated: false });
+  
+    jwt.verify(token, "shhhh", (err, decoded) => {
+      if (err) return res.json({ authenticated: false });
+      res.json({ authenticated: true, user: decoded });
+    });
+  });
 
 app.listen(3000, () => {
     console.log("server is running on port 3000");

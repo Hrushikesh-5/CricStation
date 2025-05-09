@@ -5,8 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ScoreCard</title>
     <link rel="stylesheet" href="/stylesheets/scorecard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="manifest" href="/manifest.json">
 </head>
 <body>
+  <!-- <a href="/chart" id="chart-icon" title="View Chart">
+    <i class="fas fa-chart-bar"></i>
+  </a> -->
+  <div id="chart-icon-wrapper">
+    <a href="/chart" id="chart-icon" title="View Chart">
+      <i class="fas fa-chart-bar"></i>
+    </a>
+    <span class="chart-label">View Chart</span>
+  </div>
   <div id="customModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
     <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 10px; text-align: center;">
         <p>Start Next Over?</p>

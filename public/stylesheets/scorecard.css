@@ -6,7 +6,64 @@
     margin: 0;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     box-sizing: border-box;
-}body{
+}
+/* #chart-icon {
+    position: fixed;
+    top: 16px;
+    right: 20px;
+    font-size: 28px;
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.4); 
+    padding: 10px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    text-decoration: none;
+  }
+  
+  #chart-icon:hover {
+    color: #fff;
+    background-color: #007bff;
+    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.6);
+    transform: scale(1.1);
+  } */
+  #chart-icon-wrapper {
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    z-index: 1000;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  #chart-icon {
+    font-size: 28px;
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 50%;
+    transition: transform 0.2s ease, color 0.2s ease;
+    display: inline-block;
+  }
+  
+  #chart-icon:hover {
+    color: #00d1ff;
+    transform: scale(1.1);
+  }
+  
+  .chart-label {
+    display: block;
+    margin-top: 5px;
+    font-size: 13px;
+    color: #eeeeee;
+    font-weight: 500;
+    background-color: rgba(0, 0, 0, 0.25);
+    padding: 2px 6px;
+    border-radius: 6px;
+  }
+  
+body{
     min-height: 100vh;
     background: url(/images/cricket.jpg) no-repeat;
     background-position: center;

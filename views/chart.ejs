@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Over-wise Runs Chart</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background-color: #121212;
+      color: white;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    canvas {
+      max-width: 90%;
+      max-height: 80vh;
+    }
+  </style>
+</head>
+<body>
+  <h2>Over-wise Runs</h2>
+  <canvas id="runsChart"></canvas>
+
+  <script>
+    // Get data from sessionStorage
+    const overNumbers = JSON.parse(sessionStorage.getItem('chartThisOver')) || [];
+    const overRuns = JSON.parse(sessionStorage.getItem('chartThisOverRuns')) || [];
+
+    const ctx = document.getElementById('runsChart').getContext('2d');
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: overNumbers.map(num => `Over ${num}`),
+        datasets: [{
+          label: 'Runs Scored',
+          data: overRuns,
+          backgroundColor: '#4caf50',
+          borderColor: '#388e3c',
+          borderWidth: 1,
+          // barThickness: 50,        // Fixed bar width
+  maxBarThickness: 70      // Optional: Max limit
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Runs'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Over Number'
+            }//,
+            // categoryPercentage: 0.4,
+            // barPercentage: 0.8
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: 'white'
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

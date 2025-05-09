@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline Mode</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #121212;
+            color: #ffffff;
+        }
+        h1 {
+            font-size: 24px;
+        }
+        p {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+        }
+        .retry-btn {
+            background-color: #ff4500;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .retry-btn:hover {
+            background-color: #ff5722;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>You are offline</h1>
+        <p>It looks like your internet connection is down.</p>
+        <p>Please check your connection and try again.</p>
+        <button class="retry-btn" onclick="window.location.reload()">Retry</button>
+    </div>
+</body>
+</html>
